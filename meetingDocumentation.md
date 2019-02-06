@@ -1,22 +1,31 @@
-Meeting #1 - 2/6/2019<br/>
-Attendees: Andre, Nathan, Tiernon, Michael<br/>
-Location: Spahr Library<br/>
-Accomplishments:<br/>
-  Figure out interaction between front and back end.<br/>
-  Proclaimed decision to use ruby on rails <br/><br/>
-Front-Back Interaction Plan:<br/>
-* Initialization <br/>
-   * From front-end <br/>
-      * Board Size (x,y) <br/>
-      * number of mines <br/>
-   * From back-end<br/>
-      * check values, throw exception if invalid <br/>
-      * initialize 2D array (Board Class)<br/>
-   * Start Game:<br/>
-      * Front-End sends first (x,y) <br/>
-      * Back generate mines <br/>
-   * Step: <br/>
-      * send (x,y) user choice (front)<br/>
-      * refresh board (back)<br/>
-   * End:<br/>
-      * bools gameOver, wonGame<br/>
+# Meeting Notes
+
+## Meeting #1 - 2/6/2019 09:00 - 09:50
+
+Attendees: Andre, Nathan, Tiernon, Michael
+
+Location: Spahr Library
+
+### Accomplishments
+
+* Figure out interaction between front and back end.
+* Proclaimed decision to use ruby on rails
+* Initialization of Google Cloud project
+
+### Front-Back Interaction Plan
+
+* Initialization
+  * From front-end
+    * Board Size (x,y)
+    * number of mines
+  * From back-end
+    * check values, throw exception if invalid
+    * initialize 2D array (Board Class)
+  * Start Game:
+    * Front-End sends first (x,y)
+    * Back generate mines
+  * Step:
+    * send (x,y) user choice (front)
+    * refresh board (back)
+  * End:
+    * bools gameOver, wonGame
