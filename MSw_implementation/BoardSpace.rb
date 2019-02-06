@@ -37,10 +37,21 @@ class BoardSpace
 		return @@isHidden
 	end
 	#returns number of mines surrounding the space
-	def getNumMines
+	def getNumMines()
 		return @@numMines
 	end
 
+	#defines how the space should be displayed
+	def getSpace()
+		if @@isHidden
+			return "_"
+		elsif @@isFlagged
+			return "f"
+		elsif !@@isMine
+			return @@numMines
+		else 
+			return "m"
+	end
 end
 
 
