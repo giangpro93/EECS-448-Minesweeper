@@ -5,7 +5,7 @@ class BoardSpace
 	@@isMine = false
 	@@isFlagged = false
 	@@isHidden = true
-	@@Mines = 0
+	@@numMines = 0
 
 	#There is a mine here, set by Board
 	def setMine()
@@ -17,22 +17,31 @@ class BoardSpace
 	end
 	#Unhides a space
 	def unhide()
-		@@Hidden = false
+		@@isHidden = false
 	end
 	#Sets number of mines calculated by board
-	def setMines(numMines)
-		@@Mines = numMines
+	def setNumMines(mines)
+		@@numMines = mines
 	end
 
 	#tells you if space is a mine
-	def thisIsAMine()
+	def isThisAMine()
 		return @@isMine
 	end
 	#tells is space is flagged
 	def isFlagged()
 		return @@isFlagged
 	end
+	#returns if space is hidden
+	def isThisHidden()
+		return @@isHidden
+	end
+	#returns number of mines surrounding the space
+	def getNumMines
+		return @@numMines
+	end
 
-	
 end
+
+
 
