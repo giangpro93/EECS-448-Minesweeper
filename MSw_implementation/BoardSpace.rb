@@ -8,20 +8,29 @@ class BoardSpace
 	@@Mines = 0
 
 	#There is a mine here, set by Board
-	def setMine
+	def setMine()
 		@@isMine = true
 	end
 	#Someone wants to toggle flag
-	def toggleFlagged
+	def toggleFlagged()
 		@@isFlagged = !@@isFlagged
 	end
 	#Unhides a space
-	def unhide
+	def unhide()
 		@@Hidden = false
 	end
 	#Sets number of mines calculated by board
 	def setMines(numMines)
 		@@Mines = numMines
+	end
+
+	#tells you if space is a mine
+	def thisIsAMine()
+		return @@isMine
+	end
+	#tells is space is flagged
+	def isFlagged()
+		return @@isFlagged
 	end
 
 	
