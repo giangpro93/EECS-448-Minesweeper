@@ -1,3 +1,6 @@
+#BoardSpace class goes in each spot on the game board, enabling tracking of
+#mine location, flags, # of spots near, etc.
+
 class BoardSpace
 	@@isMine = false
 	@@isFlagged = false
