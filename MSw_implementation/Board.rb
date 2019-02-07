@@ -61,26 +61,23 @@ class Board
 		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = @m_cols * @m_rows
 		minesPlaced = 0
-		mineIndex = Array.new(maxIndex)
+		mineIndex = Array.new(maxIndex-1, false)
 
-		#initialize 
-		for x in (0...maxIndex)
-			mineIndex[x] = false
+		#initializes a certian number of mines
+		for x in (0...@m_numMines)
+			mineIndex[x] = true
 		end
 		
-		#randomly decides where in the array the bombs go, not on xpos,ypos.
-		while (minesPlaced < @m_numMines)
-			arrVal = rand(maxIndex)
-			if(!mineIndex[arrVal] && arrVal != (ypos*@m_rows)+xpos)
-				mineIndex[arrVal] = true
-				minesPlaced +=1
-			end
-		end
+		#shuffle the array to achieve randomness
+		mineIndex = mineIndex.shuffle()
 		
-		#copy 1D array into 2D array
+		#copy 1D array into 2D array, adjusting for xpos,ypos
+		colision = 0
 		for i in (0...@m_rows)
 			for j in (0...@m_cols)
-				if (mineIndex[i+(j*@m_rows)])
+				if i == xpos && j == ypos
+					colision = 1
+				elsif (mineIndex[i+(j*@m_rows)-colision])
 					@m_board[i][j].setMine()
 				end
 			end
@@ -92,4 +89,8 @@ class Board
 	end
 
 end
+
+obj = Board.new(1200,1200,1200*1200-1)
+obj.placeBombs(3,0)
+obj.showBoard()
 
