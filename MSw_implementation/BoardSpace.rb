@@ -52,6 +52,15 @@ class BoardSpace
 			return "m"
 		end
 	end
+
+	#Shows either a bomb or a number of bombs around
+	def showSpace()
+		if @@isMine
+			return "b"
+		else 
+			return @@numMines
+		end
+	end
 end
 
 
