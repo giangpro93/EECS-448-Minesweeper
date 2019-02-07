@@ -63,7 +63,7 @@ class Board
 	
 	#places all bombs around the first space stepped on
 	def placeBombs(xpos,ypos)
-	
+		#Mark Bombs with @m_board[x][y].setMine()
 	end
 
 end
