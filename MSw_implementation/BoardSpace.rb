@@ -1,53 +1,60 @@
 #BoardSpace class goes in each spot on the game board, enabling tracking of
 #mine location, flags, # of spots near, etc.
 class BoardSpace
-	@@isMine = false
-	@@isFlagged = false
-	@@isHidden = true
-	@@numMines = 0
+	def initialize()
+		@isMine = false
+		@isFlagged = false
+		@isHidden = true
+		@numMines = 0
+	end
+	
 
 	#There is a mine here, set by Board
 	def setMine()
-		@@isMine = true
+		@isMine = true
+	end
+
+	def setNotMine()
+		@isMine = false
 	end
 	#Someone wants to toggle flag
 	def toggleFlagged()
-		@@isFlagged = !@@isFlagged
+		@isFlagged = !@isFlagged
 	end
 	#Unhides a space
 	def unhide()
-		@@isHidden = false
+		@isHidden = false
 	end
 	#Sets number of mines calculated by board
 	def setNumMines(mines)
-		@@numMines = mines
+		@numMines = mines
 	end
 
 	#tells you if space is a mine
 	def isThisAMine()
-		return @@isMine
+		return @isMine
 	end
 	#tells is space is flagged
 	def isFlagged()
-		return @@isFlagged
+		return @isFlagged
 	end
 	#returns if space is hidden
 	def isThisHidden()
-		return @@isHidden
+		return @isHidden
 	end
 	#returns number of mines surrounding the space
 	def getNumMines()
-		return @@numMines
+		return @numMines
 	end
 
 	#defines how the space should be displayed
 	def getSpace()
-		if @@isHidden
+		if @isHidden
 			return "_"
-		elsif @@isFlagged
+		elsif @isFlagged
 			return "f"
-		elsif !@@isMine
-			return @@numMines
+		elsif !@isMine
+			return @numMines
 		else 
 			return "m"
 		end
@@ -55,10 +62,10 @@ class BoardSpace
 
 	#Shows either a bomb or a number of bombs around
 	def showSpace()
-		if @@isMine
+		if (@isMine == true)
 			return "b"
 		else 
-			return @@numMines
+			return @numMines
 		end
 	end
 end
