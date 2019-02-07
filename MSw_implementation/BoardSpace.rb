@@ -1,6 +1,5 @@
 #BoardSpace class goes in each spot on the game board, enabling tracking of
 #mine location, flags, # of spots near, etc.
-
 class BoardSpace
 	@@isMine = false
 	@@isFlagged = false
@@ -51,6 +50,16 @@ class BoardSpace
 			return @@numMines
 		else 
 			return "m"
+		end
+	end
+
+	#Shows either a bomb or a number of bombs around
+	def showSpace()
+		if @@isMine
+			return "b"
+		else 
+			return @@numMines
+		end
 	end
 end
 
