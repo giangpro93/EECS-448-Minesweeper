@@ -55,6 +55,19 @@ class Board
 			print "\n"
 		end	
 	end
+	
+	#takes first step, then places all bombs
+	def firstStep(xpos, ypos)
+		placeBombs(xpos, ypos)
+	end
+	
+	#places all bombs around the first space stepped on
+	def placeBombs(xpos,ypos)
+	
+	end
 
 end
+
+obj = Board.new(10,2,3)
+obj.showBoard()
 
