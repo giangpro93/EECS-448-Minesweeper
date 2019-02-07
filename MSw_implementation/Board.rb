@@ -9,6 +9,8 @@ class Board
 		@m_cols = cols
 		@m_numMines = mines
 		@m_numFlags = mines 
+		#track number of mines correctly flagged
+		@m_numMinesFlagged
 		@m_board = Array.new(rows){Array.new(cols){BoardSpace.new()}}
 	end
 
@@ -136,6 +138,62 @@ class Board
 		
 		return count
 	
+	end
+
+
+
+	#-------------------------
+	#methods for Executive to call (excluding initialize)
+
+	#toggleFlag Space if valid
+	def toggleFlagSpace(row, col)
+		#check if we can flag the space
+		if !@m_board[row][col].isFlagged() && m_numFlags > 0
+			@m_board[row][col].toggleFlag()
+			@m_numFlags = @m_numFlags - 1
+			#if the space is a mine, update correctedly flagged count
+			if @m_board[row][col].isThisAMine()
+				@m_numMinesFlagged = @m_numMinesFlagged + 1
+			end
+		#check if space is already flagged, then remove
+		elsif @m_board[row][col].isFlagged()
+			@m_board[row][col].toggleFlag()
+			@m_numFlags = @m_numFlags + 1
+			#if the space is a mine, update correctedly flagged count
+			if @m_board[row][col].isThisAMine()
+				@m_numMinesFlagged = @m_numMinesFlagged - 1
+			end
+		#throw an exception if you're out of flags
+		else
+			raise RuntimeError.new("Out of flags")
+		end
+	end
+
+
+	#user clicks a spot
+	#returns true if a mine is hit, else false
+	def selectSpace(row, col)
+		#if the selected space is a mine
+		if @m_board[row][col].isThisAMine()
+			return true
+		else
+			#check if this spot is adjacent to other mines
+			
+			#if not, reveal 8 surrounding spaces in recursive function
+
+			#return false
+			return false
+		end
+
+	end
+
+	#check if the user has flagged all mines - true if user has won, else false
+	def userWin()
+		if @m_numMines == @m_numMinesFlagged
+			return true
+		else
+			return false
+		end
 	end
 
 end

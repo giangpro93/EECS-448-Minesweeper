@@ -45,16 +45,35 @@ def run()
             puts "enter row, then col"
             rowChoice = gets.chomp
             colChoice = gets.chomp
-            #toggle the flag for specified space - need func in Board
+            #toggle the flag for specified space - will throw exception if out of flags
+            begin
+                b1.toggleFlagSpace(rowChoice, colChoice)
+            rescue RuntimeError => e
+                puts "Insufficient number of flags"
+            end
+
         elsif userChoice == 2#user checks for mine
             puts "enter row, then col"
             rowChoice = gets.chomp
             colChoice = gets.chomp
+
+            #returns true to break out of while loop if a mine is hit
+            gameOver = b1.selectSpace(rowChoice,colChoice)
         end
 
-        #check every iteration if the game should end
+        #check to see if user has won
+        wonGame = b1.userWin()
 
         #update board control file if game does not end
+    end
+
+    #determine win/loss
+    if gameOver
+        puts "You lose"
+    end
+
+    if wonGame
+        puts "You win"
     end
 
 end
