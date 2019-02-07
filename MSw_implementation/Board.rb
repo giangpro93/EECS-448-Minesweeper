@@ -12,12 +12,12 @@ class Board
 		@m_rows = rows
 		@m_cols = cols
 		@m_numMines = mines
-		@m_numFlags = mines
+		@m_numFlags = mines 
 
-		@m_board = Array.new(rows) {Array.new(rows,cols)}
+		@m_board = Array.new(rows) {Array.new(cols)}
 	
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
+		for x in (0...@m_rows)
+			for y in (0...@m_cols)
 				@m_board[x][y] = BoardSpace.new()
 			end
 		end	
@@ -55,6 +55,20 @@ class Board
 			print "\n"
 		end	
 	end
+
+	#shows flags on the board
+	def showFlags()
+		for x in (0..(@m_rows-1))
+			for y in (0..(@m_cols-1))
+				if @m_board[x][y].isFlagged()
+					print "f"
+				else
+					print "0"
+				end
+			end
+			print "\n"
+		end	
+	end	
 	
 	#takes first step, then places all bombs
 	def firstStep(xpos, ypos)
@@ -66,44 +80,50 @@ class Board
 		#Mark Bombs with @m_board[x][y].setMine()
 
 		maxIndex = @m_cols * @m_rows
+		#hold indices of random numbers for mines
 		mineIndex = []
 
-		while mineIndex.length < maxIndex
+		while mineIndex.length < @m_numMines
+			
 			found = false
 			temp = rand(maxIndex-1)
-			#check we already have the randomly generated number
-			#this line is likely redundant, I'll need to test in a real environment
-			if mineIndex.length == 0 then 
+
+			#check we already have the randomly generated number and then add to array
+			if mineIndex.length == 0 && @m_rows * xpos + ypos != temp
 				mineIndex.push(temp)
-			else	
-				for i in (0...mineIndex.length-1)
-					if mineIndex[i] == temp then
+			else
+				for i in (0...mineIndex.length)
+					if temp == mineIndex[i] || @m_rows * xpos + ypos == temp
 						found = true
 					end
 				end
 
-				if found==false then
+				if found == false
 					mineIndex.push(temp)
 				end
+
 			end
+
 		end
 
+		
+
 		#implement bombs
-		for i in (0...mineIndex.length-1)
+		for i in (0...mineIndex.length)
 			
 			xVal = mineIndex[i] / @m_cols
-			yVal = mineIndex[i].modulo(@m_rows) 
-			print xVal
-			print "\n"
-			print yVal
-			print "\n"
-			@m_board[xVal][yVal].setMine()
+			yVal = mineIndex[i] % @m_rows
+			#@m_board[xVal][yVal].setMine()
 		end
+
+		@m_board[2][3].toggleFlagged()
+		#@m_board[2][3].setNumMines(3)
 	end
 
 end
 
-obj = Board.new(10,2,3)
+obj = Board.new(4,4,3)
 obj.placeBombs(3,0)
 obj.showBoard()
+obj.showFlags()
 
