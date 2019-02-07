@@ -1,3 +1,5 @@
+require_relative 'BoardSpace'
+
 class Board
 	@m_rows = 0
 	@m_cols = 0
