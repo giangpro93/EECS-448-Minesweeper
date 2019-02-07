@@ -84,7 +84,3 @@ class Board
 
 end
 
-obj = Board.new(20,20,20*20-1)
-obj.placeBombs(12,12)
-obj.showBoard()
-
