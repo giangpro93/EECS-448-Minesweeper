@@ -57,15 +57,18 @@ class Board
 	
 	#places all mines around the first space stepped on
 	def placeBombs(xpos,ypos)
-		#Mark Bombs with @m_board[x][y].setMine()
+		
+		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = @m_cols * @m_rows
 		minesPlaced = 0
 		mineIndex = Array.new(maxIndex)
 
+		#initialize 
 		for x in (0...maxIndex)
 			mineIndex[x] = false
 		end
 		
+		#randomly decides where in the array the bombs go, not on xpos,ypos.
 		while (minesPlaced < @m_numMines)
 			arrVal = rand(maxIndex)
 			if(!mineIndex[arrVal] && arrVal != (ypos*@m_rows)+xpos)
@@ -74,6 +77,7 @@ class Board
 			end
 		end
 		
+		#copy 1D array into 2D array
 		for i in (0...@m_rows)
 			for j in (0...@m_cols)
 				if (mineIndex[i+(j*@m_rows)])
