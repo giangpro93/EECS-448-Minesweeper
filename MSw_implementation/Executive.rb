@@ -66,11 +66,13 @@ def run()
         @wonGame = b1.userWin()
 
         #update board control file if game does not end
+        b1.showBoard()
     end
 
     #determine win/loss
     if @gameOver
         puts "You lose"
+        b1.showBoard()
     end
 
     if @wonGame
@@ -83,5 +85,5 @@ end
 
 
 #testing
-e1 = Executive.new(4,4,15)
+e1 = Executive.new(4,4,5)
 e1.run()

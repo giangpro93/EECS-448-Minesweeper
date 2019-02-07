@@ -141,6 +141,38 @@ class Board
 	end
 
 
+	def recUnhide(xpos,ypos)
+			if(@m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden())
+				@m_board[xpos][ypos].unhide()
+				if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos)
+				end
+				if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+					recUnhide(xpos,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+					recUnhide(xpos,ypos-1)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos-1)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos-1)
+				end
+			else
+				@m_board[xpos][ypos].unhide()
+			end
+			
+		end
 
 	#-------------------------
 	#methods for Executive to call (excluding initialize)
@@ -178,8 +210,8 @@ class Board
 			return true
 		else
 			#check if this spot is adjacent to other mines
-			
 			#if not, reveal 8 surrounding spaces in recursive function
+			recUnhide(row,col)
 
 			#return false
 			return false
@@ -195,39 +227,12 @@ class Board
 			return false
 		end
 	end
+
+
+	#end of Executive call functions
+	#------------------------------
 	
-	def recUnhide(xpos,ypos)
-		if(@m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden())
-			@m_board[xpos][ypos].unhide()
-			if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-				recUnhide(xpos+1,ypos)
-			end
-			if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-				recUnhide(xpos-1,ypos)
-			end
-			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
-				recUnhide(xpos,ypos+1)
-			end
-			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
-				recUnhide(xpos,ypos-1)
-			end
-			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-				recUnhide(xpos+1,ypos+1)
-			end
-			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-				recUnhide(xpos+1,ypos-1)
-			end
-			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-				recUnhide(xpos-1,ypos+1)
-			end
-			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-				recUnhide(xpos-1,ypos-1)
-			end
-		else
-			@m_board[xpos][ypos].unhide()
-		end
-		
-	end
+	
 
 end
 
