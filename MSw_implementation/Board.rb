@@ -98,33 +98,39 @@ class Board
 	end
 
 	def calculateNearby()
-		
+		for i in (0...@m_rows)
+			for j in (0...@m_cols)
+				if(!@m_board[i][j].isThisAMine())
+					@m_board[i][j].setNumMines(calcAround(i,j))
+				end
+			end
+		end
 	end
 	
 	def calcAround(xpos,ypos)
 		count = 0
-		if(@m_board[xpos+1][ypos].isThisAMine() && (ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+		if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos].isThisAMine())
+			count += 1
+		end
+		if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0)  && @m_board[xpos-1][ypos].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos-1][ypos].isThisAMine() && (ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && (xpos < @m_rows && xpos >= 0) && @m_board[xpos][ypos+1].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && (xpos < @m_rows && xpos >= 0))
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && (xpos < @m_rows && xpos >= 0) && @m_board[xpos][ypos-1].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && (xpos < @m_rows && xpos >= 0))
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos+1].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos+1][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos-1].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos+1][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0) && @m_board[xpos-1][ypos+1].isThisAMine())
 			count += 1
 		end	
-		if(@m_board[xpos-1][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-			count += 1
-		end	
-		if(@m_board[xpos-1][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0) && @m_board[xpos-1][ypos-1].isThisAMine())
 			count += 1
 		end	
 		
@@ -134,4 +140,8 @@ class Board
 
 end
 
+#obj = Board.new(10,10,10)
+#obj.placeBombs(0,3)
+#obj.calculateNearby()
+#obj.showBoard()
 
