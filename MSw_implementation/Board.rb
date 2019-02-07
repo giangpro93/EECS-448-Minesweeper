@@ -7,6 +7,7 @@ class Board
 	@m_numFlags = 0
 	@m_board = []
 
+	#initializes the board
 	def initialize(rows, cols, mines)
 		@m_rows = rows
 		@m_cols = cols
@@ -30,6 +31,10 @@ class Board
 	def getCols()
 		return @m_cols
 	end
+	#returns number of flags
+	def getFlags()
+		return @m_numFlags
+	end	
 
 	#prints board to terminal(currently)
 	def printBoard()
@@ -40,6 +45,16 @@ class Board
 			print "\n"
 		end	
 	end
-end
+	
+	#shows either bomb or number of spaces around bomb
+	def showBoard()
+		for x in (0..(@m_rows-1))
+			for y in (0..(@m_cols-1))
+				print @m_board[x][y].showSpace()
+			end
+			print "\n"
+		end	
+	end
 
+end
 
