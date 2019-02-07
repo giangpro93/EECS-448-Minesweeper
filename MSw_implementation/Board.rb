@@ -63,9 +63,8 @@ class Board
 	
 	#places all mines around the first space stepped on
 	def placeBombs(xpos,ypos)
-<<<<<<< HEAD
 		#Mark Bombs with @m_board[x][y].setMine()
-=======
+
 		maxIndex = @m_cols * @m_rows
 		mineIndex = []
 
@@ -77,7 +76,7 @@ class Board
 			if mineIndex.length == 0 then 
 				mineIndex.push(temp)
 			else	
-				for i in (0...mineIndex.length -1)
+				for i in (0...mineIndex.length-1)
 					if mineIndex[i] == temp then
 						found = true
 					end
@@ -91,16 +90,20 @@ class Board
 
 		#implement bombs
 		for i in (0...mineIndex.length-1)
-			xVal = mineIndex[i] % @m_rows
-			yVal = mineIndex[i] / @m_cols
+			
+			xVal = mineIndex[i] / @m_cols
+			yVal = mineIndex[i].modulo(@m_rows) 
+			print xVal
+			print "\n"
+			print yVal
+			print "\n"
 			@m_board[xVal][yVal].setMine()
 		end
-
->>>>>>> df18bff81ce538142cfc7173bb48854974ea89a9
 	end
 
 end
 
 obj = Board.new(10,2,3)
+obj.placeBombs(3,0)
 obj.showBoard()
 
