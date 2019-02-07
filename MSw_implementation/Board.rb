@@ -195,11 +195,48 @@ class Board
 			return false
 		end
 	end
+	
+	def recUnhide(xpos,ypos)
+		if(@m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden())
+			@m_board[xpos][ypos].unhide()
+			if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+				recUnhide(xpos+1,ypos)
+			end
+			if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+				recUnhide(xpos-1,ypos)
+			end
+			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+				recUnhide(xpos,ypos+1)
+			end
+			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+				recUnhide(xpos,ypos-1)
+			end
+			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+				recUnhide(xpos+1,ypos+1)
+			end
+			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+				recUnhide(xpos+1,ypos-1)
+			end
+			if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+				recUnhide(xpos-1,ypos+1)
+			end
+			if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+				recUnhide(xpos-1,ypos-1)
+			end
+		else
+			@m_board[xpos][ypos].unhide()
+		end
+		
+	end
 
 end
 
-#obj = Board.new(10,10,10)
+#obj = Board.new(10,10,33)
 #obj.placeBombs(0,3)
 #obj.calculateNearby()
-#obj.showBoard()
+#obj.printBoard()
+#print "\n\n\n"
+#obj.recUnhide(0,3)
+#obj.printBoard()
+
 
