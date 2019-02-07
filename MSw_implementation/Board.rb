@@ -61,9 +61,38 @@ class Board
 		placeBombs(xpos, ypos)
 	end
 	
-	#places all bombs around the first space stepped on
+	#places all mines around the first space stepped on
 	def placeBombs(xpos,ypos)
-	
+		maxIndex = @m_cols * @m_rows
+		mineIndex = []
+
+		while mineIndex.length < maxIndex
+			found = false
+			temp = rand(maxIndex-1)
+			#check we already have the randomly generated number
+			#this line is likely redundant, I'll need to test in a real environment
+			if mineIndex.length == 0 then 
+				mineIndex.push(temp)
+			else	
+				for i in (0...mineIndex.length -1)
+					if mineIndex[i] == temp then
+						found = true
+					end
+				end
+
+				if found==false then
+					mineIndex.push(temp)
+				end
+			end
+		end
+
+		#implement bombs
+		for i in (0...mineIndex.length-1)
+			xVal = mineIndex[i] % @m_rows
+			yVal = mineIndex[i] / @m_cols
+			@m_board[xVal][yVal].setMine()
+		end
+
 	end
 
 end
