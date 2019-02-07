@@ -113,11 +113,9 @@ class Board
 			
 			xVal = mineIndex[i] / @m_cols
 			yVal = mineIndex[i] % @m_rows
-			#@m_board[xVal][yVal].setMine()
+			@m_board[xVal][yVal].setMine()
 		end
 
-		@m_board[2][3].toggleFlagged()
-		#@m_board[2][3].setNumMines(3)
 	end
 
 end
@@ -125,5 +123,5 @@ end
 obj = Board.new(4,4,3)
 obj.placeBombs(3,0)
 obj.showBoard()
-obj.showFlags()
+
 
