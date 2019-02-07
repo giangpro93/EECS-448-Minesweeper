@@ -98,7 +98,38 @@ class Board
 	end
 
 	def calculateNearby()
-
+		
+	end
+	
+	def calcAround(xpos,ypos)
+		count = 0
+		if(@m_board[xpos+1][ypos].isThisAMine() && (ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos-1][ypos].isThisAMine() && (ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && (xpos < @m_rows && xpos >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && (xpos < @m_rows && xpos >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos+1][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos+1][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos-1][ypos+1].isThisAMine() && ((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+			count += 1
+		end	
+		if(@m_board[xpos-1][ypos-1].isThisAMine() && ((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+			count += 1
+		end	
+		
+		return count
+	
 	end
 
 end
