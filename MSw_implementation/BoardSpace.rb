@@ -1,34 +1,18 @@
 #BoardSpace class goes in each spot on the game board, enabling tracking of
 #mine location, flags, # of spots near, etc.
 class BoardSpace
-<<<<<<< HEAD
 	@isMine = false
 	@isFlagged = false
 	@isHidden = true
 	@numMines = 0
 
-	#def initialize()
-		
-=======
-	def initialize()
-		@isMine = false
-		@isFlagged = false
-		@isHidden = true
-		@numMines = 0
-	end
-	
->>>>>>> NathanMineImplimentation
-
 	#There is a mine here, set by Board
 	def setMine()
 		@isMine = true
-<<<<<<< HEAD
-=======
 	end
 
 	def setNotMine()
 		@isMine = false
->>>>>>> NathanMineImplimentation
 	end
 	#Someone wants to toggle flag
 	def toggleFlagged()
@@ -75,11 +59,7 @@ class BoardSpace
 
 	#Shows either a bomb or a number of bombs around
 	def showSpace()
-<<<<<<< HEAD
 		if @isMine
-=======
-		if (@isMine == true)
->>>>>>> NathanMineImplimentation
 			return "b"
 		else 
 			return @numMines
