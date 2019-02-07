@@ -6,6 +6,13 @@ class BoardSpace
 	@isHidden = true
 	@numMines = 0
 
+	def initialize()
+		@isMine = false
+		@isFlagged = false
+		@isHidden = true
+		@numMines = 0
+	end
+
 	#There is a mine here, set by Board
 	def setMine()
 		@isMine = true
