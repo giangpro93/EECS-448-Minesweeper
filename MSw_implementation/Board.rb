@@ -1,11 +1,7 @@
 require_relative 'BoardSpace'
 
 class Board
-	@m_rows = 0
-	@m_cols = 0
-	@m_numMines = 0
-	@m_numFlags = 0
-	@m_board = []
+
 
 	#initializes the board
 	def initialize(rows, cols, mines)
@@ -13,14 +9,7 @@ class Board
 		@m_cols = cols
 		@m_numMines = mines
 		@m_numFlags = mines 
-
-		@m_board = Array.new(rows) {Array.new(cols)}
-	
-		for x in (0...@m_rows)
-			for y in (0...@m_cols)
-				@m_board[x][y] = BoardSpace.new()
-			end
-		end	
+		@m_board = Array.new(rows){Array.new(cols){BoardSpace.new()}}
 	end
 
 	#returns number of rows
@@ -38,9 +27,10 @@ class Board
 
 	#prints board to terminal(currently)
 	def printBoard()
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
+		for x in (0...@m_rows)
+			for y in (0...@m_cols)
 				print @m_board[x][y].getSpace()
+				print " "
 			end
 			print "\n"
 		end	
@@ -48,9 +38,10 @@ class Board
 	
 	#shows either bomb or number of spaces around bomb
 	def showBoard()
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
+		for x in (0...@m_rows)
+			for y in (0...@m_cols)
 				print @m_board[x][y].showSpace()
+				print " "
 			end
 			print "\n"
 		end	
@@ -73,55 +64,42 @@ class Board
 	#takes first step, then places all bombs
 	def firstStep(xpos, ypos)
 		placeBombs(xpos, ypos)
+		calculateNearby()
 	end
 	
 	#places all mines around the first space stepped on
 	def placeBombs(xpos,ypos)
-		#Mark Bombs with @m_board[x][y].setMine()
-
+		
+		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = @m_cols * @m_rows
-		#hold indices of random numbers for mines
-		mineIndex = []
+		mineIndex = Array.new(maxIndex-1, false)
 
-		while mineIndex.length < @m_numMines
-			
-			found = false
-			temp = rand(maxIndex-1)
-
-			#check we already have the randomly generated number and then add to array
-			if mineIndex.length == 0 && @m_rows * xpos + ypos != temp
-				mineIndex.push(temp)
-			else
-				for i in (0...mineIndex.length)
-					if temp == mineIndex[i] || @m_rows * xpos + ypos == temp
-						found = true
-					end
-				end
-
-				if found == false
-					mineIndex.push(temp)
+		#initializes a certian number of mines
+		for x in (0...@m_numMines)
+			mineIndex[x] = true
+		end
+		
+		#shuffle the array to achieve randomness
+		mineIndex = mineIndex.shuffle()
+		
+		#copy 1D array into 2D array, adjusting for xpos,ypos
+		colision = 0
+		for i in (0...@m_rows)
+			for j in (0...@m_cols)
+				if i == xpos && j == ypos
+					colision = 1
+				elsif (mineIndex[i+(j*@m_rows)-colision])
+					@m_board[i][j].setMine()
 				end
 
 			end
 
 		end
+	end
 
-		
-
-		#implement bombs
-		for i in (0...mineIndex.length)
-			
-			xVal = mineIndex[i] / @m_cols
-			yVal = mineIndex[i] % @m_rows
-			@m_board[xVal][yVal].setMine()
-		end
+	def calculateNearby()
 
 	end
 
 end
-
-obj = Board.new(4,4,3)
-obj.placeBombs(3,0)
-obj.showBoard()
-
 
