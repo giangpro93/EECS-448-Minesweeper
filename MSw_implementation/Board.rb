@@ -148,7 +148,7 @@ class Board
 	#toggleFlag Space if valid
 	def toggleFlagSpace(row, col)
 		#check if we can flag the space
-		if !@m_board[row][col].isFlagged() && m_numFlags > 0
+		if !@m_board[row][col].isFlagged() && @m_numFlags > 0
 			@m_board[row][col].toggleFlag()
 			@m_numFlags = @m_numFlags - 1
 			#if the space is a mine, update correctedly flagged count
