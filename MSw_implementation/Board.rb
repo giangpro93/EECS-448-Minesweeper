@@ -1,11 +1,7 @@
 require_relative 'BoardSpace'
 
 class Board
-	@m_rows = 0
-	@m_cols = 0
-	@m_numMines = 0
-	@m_numFlags = 0
-	@m_board = []
+
 
 	#initializes the board
 	def initialize(rows, cols, mines)
@@ -14,13 +10,8 @@ class Board
 		@m_numMines = mines
 		@m_numFlags = mines
 
-		@m_board = Array.new(rows) {Array.new(rows,cols)}
-	
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
-				@m_board[x][y] = BoardSpace.new()
-			end
-		end	
+		@m_board = Array.new(rows){Array.new(cols){BoardSpace.new()}}
+
 	end
 
 	#returns number of rows
@@ -38,9 +29,10 @@ class Board
 
 	#prints board to terminal(currently)
 	def printBoard()
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
+		for x in (0...@m_rows)
+			for y in (0...@m_cols)
 				print @m_board[x][y].getSpace()
+				print " "
 			end
 			print "\n"
 		end	
@@ -48,9 +40,10 @@ class Board
 	
 	#shows either bomb or number of spaces around bomb
 	def showBoard()
-		for x in (0..(@m_rows-1))
-			for y in (0..(@m_cols-1))
+		for x in (0...@m_rows)
+			for y in (0...@m_cols)
 				print @m_board[x][y].showSpace()
+				print " "
 			end
 			print "\n"
 		end	
@@ -64,46 +57,34 @@ class Board
 	#places all mines around the first space stepped on
 	def placeBombs(xpos,ypos)
 		#Mark Bombs with @m_board[x][y].setMine()
-
 		maxIndex = @m_cols * @m_rows
-		mineIndex = []
+		minesPlaced = 0
+		mineIndex = Array.new(maxIndex)
 
-		while mineIndex.length < maxIndex
-			found = false
-			temp = rand(maxIndex-1)
-			#check we already have the randomly generated number
-			#this line is likely redundant, I'll need to test in a real environment
-			if mineIndex.length == 0 then 
-				mineIndex.push(temp)
-			else	
-				for i in (0...mineIndex.length-1)
-					if mineIndex[i] == temp then
-						found = true
-					end
-				end
-
-				if found==false then
-					mineIndex.push(temp)
-				end
+		for x in (0...maxIndex)
+			mineIndex[x] = false
+		end
+		
+		while (minesPlaced < @m_numMines)
+			arrVal = rand(maxIndex)
+			if(!mineIndex[arrVal] && arrVal != (ypos*@m_rows)+xpos)
+				mineIndex[arrVal] = true
+				minesPlaced +=1
 			end
 		end
-
-		#implement bombs
-		for i in (0...mineIndex.length-1)
-			
-			xVal = mineIndex[i] / @m_cols
-			yVal = mineIndex[i].modulo(@m_rows) 
-			print xVal
-			print "\n"
-			print yVal
-			print "\n"
-			@m_board[xVal][yVal].setMine()
+		
+		for i in (0...@m_rows)
+			for j in (0...@m_cols)
+				if (mineIndex[i+(j*@m_rows)])
+					@m_board[i][j].setMine()
+				end
+			end
 		end
 	end
 
 end
 
-obj = Board.new(10,2,3)
-obj.placeBombs(3,0)
+obj = Board.new(20,20,20*20-1)
+obj.placeBombs(12,12)
 obj.showBoard()
 
