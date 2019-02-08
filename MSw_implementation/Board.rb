@@ -67,6 +67,7 @@ class Board
 	def firstStep(xpos, ypos)
 		placeBombs(xpos, ypos)
 		calculateNearby()
+		selectSpace(xpos,ypos)
 	end
 	
 	#places all mines around the first space stepped on

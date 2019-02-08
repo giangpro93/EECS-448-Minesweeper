@@ -34,7 +34,7 @@ def run()
     puts "type initial row choice, then col choice"
     rowChoice = gets.chomp.to_i
     colChoice = gets.chomp.to_i
-    b1.placeBombs(rowChoice, colChoice)
+    b1.firstStep(rowChoice,colChoice)
 
     #while the game is not over, allow user input
     while !@gameOver && !@wonGame
@@ -66,7 +66,7 @@ def run()
         @wonGame = b1.userWin()
 
         #update board control file if game does not end
-        b1.showBoard()
+        b1.printBoard()
     end
 
     #determine win/loss
@@ -85,5 +85,5 @@ end
 
 
 #testing
-e1 = Executive.new(4,4,5)
+e1 = Executive.new(10,10,5)
 e1.run()
