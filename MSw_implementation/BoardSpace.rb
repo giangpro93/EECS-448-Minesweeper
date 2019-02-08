@@ -22,7 +22,7 @@ class BoardSpace
 		@isMine = false
 	end
 	#Someone wants to toggle flag
-	def toggleFlagged()
+	def toggleFlag()
 		@isFlagged = !@isFlagged
 	end
 	#Unhides a space
