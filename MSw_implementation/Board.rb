@@ -231,7 +231,7 @@ class Board
 
 end
 
-#obj = Board.new(10,10,33)
+#obj = Board.new(30,30,22)
 #obj.placeBombs(0,3)
 #obj.calculateNearby()
 #obj.printBoard()
