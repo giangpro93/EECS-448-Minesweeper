@@ -29,3 +29,14 @@ Location: Spahr Library
     * refresh board (back)
   * End:
     * bools gameOver, wonGame
+
+
+#Meeting #2 - 4:00 - 5:30
+
+Attendees: Andre, Nathan, Colin, Michael
+
+Location: Spahr Library Floor 2
+
+### Accomplishments
+Decided on genres of music to include - TBA
+
