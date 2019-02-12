@@ -39,4 +39,7 @@ Location: Spahr Library Floor 2
 
 ### Accomplishments
 Decided on genres of music to include - TBA
+Began Front End development and assigned tasks
+Resolved lab time issue
+
 
