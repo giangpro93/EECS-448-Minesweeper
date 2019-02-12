@@ -85,5 +85,5 @@ end
 
 
 #testing
-e1 = Executive.new(10,10,5)
+e1 = Executive.new(2,2,3)
 e1.run()
