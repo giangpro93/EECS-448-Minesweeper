@@ -53,10 +53,10 @@ class BoardSpace
 
 	#defines how the space should be displayed
 	def getSpace()
-		if @isHidden
-			return "_"
-		elsif @isFlagged
+		if @isFlagged
 			return "f"
+		elsif @isHidden
+			return "_"
 		elsif !@isMine
 			return @numMines
 		else 

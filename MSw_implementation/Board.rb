@@ -10,7 +10,7 @@ class Board
 		@m_numMines = mines
 		@m_numFlags = mines 
 		#track number of mines correctly flagged
-		@m_numMinesFlagged
+		@m_numMinesFlagged = 0
 		@m_board = Array.new(rows){Array.new(cols){BoardSpace.new()}}
 	end
 
