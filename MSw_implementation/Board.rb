@@ -112,14 +112,29 @@ class Board
 	
 	def calcAround(xpos,ypos)
 		count = 0
-		for x in (xpos-1...xpos+1)
-			for y in (ypos-1..ypos+1)
-				if (x != xpos && y != ypos)
-					if ((y < @m_cols && y >= 0) && (x < @m_rows && x >= 0) && @m_board[x][y].isThisAMine())
-						count++
-					end
-				end
-			end
+		if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos].isThisAMine())
+			count += 1
+		end
+		if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0)  && @m_board[xpos-1][ypos].isThisAMine())
+			count += 1
+		end	
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && (xpos < @m_rows && xpos >= 0) && @m_board[xpos][ypos+1].isThisAMine())
+			count += 1
+		end	
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && (xpos < @m_rows && xpos >= 0) && @m_board[xpos][ypos-1].isThisAMine())
+			count += 1
+		end	
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos+1].isThisAMine())
+			count += 1
+		end	
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0) && @m_board[xpos+1][ypos-1].isThisAMine())
+			count += 1
+		end	
+		if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0) && @m_board[xpos-1][ypos+1].isThisAMine())
+			count += 1
+		end	
+		if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0) && @m_board[xpos-1][ypos-1].isThisAMine())
+			count += 1
 		end	
 		
 		return count
@@ -130,14 +145,29 @@ class Board
 	def recUnhide(xpos,ypos)
 			if(@m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden())
 				@m_board[xpos][ypos].unhide()
-				for x in (xpos-1...xpos+1)
-					for y in (ypos-1..ypos+1)
-						if (x != xpos && y != ypos)
-							if ((y < @m_cols && y >= 0) && (x < @m_rows && x >= 0) && @m_board[x][y].isThisAMine())
-								recUnhide(x,y)
-							end
-						end
-					end
+				if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos)
+				end
+				if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+					recUnhide(xpos,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
+					recUnhide(xpos,ypos-1)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
+					recUnhide(xpos+1,ypos-1)
+				end
+				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos+1)
+				end
+				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
+					recUnhide(xpos-1,ypos-1)
 				end
 			else
 				@m_board[xpos][ypos].unhide()
