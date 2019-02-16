@@ -31,7 +31,7 @@ Location: Spahr Library
     * bools gameOver, wonGame
 
 
-#Meeting #2 - 4:00 - 5:30
+##Meeting #2 - 4:00 - 5:30
 
 Attendees: Andre, Nathan, Colin, Michael
 
@@ -42,4 +42,12 @@ Decided on genres of music to include - TBA
 Began Front End development and assigned tasks
 Resolved lab time issue
 
+##Meeting #3 - 1:00 - 2:45
 
+Attendees: Michael, Nathan
+
+Location: Jayhawker Towers
+
+###Accomplishments
+Generated rails server
+Successfully got aspects of MVC to work
