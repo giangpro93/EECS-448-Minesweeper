@@ -51,3 +51,13 @@ Location: Jayhawker Towers
 ###Accomplishments
 Generated rails server
 Successfully got aspects of MVC to work
+
+##Meeting #4 - 2:21 - 4:00
+
+Attendees: Tiernon, Michael, Nathan
+
+Location: Legends Apartments
+
+###Accomplishments
+Generated board in server
+Call executive controller functions from view
