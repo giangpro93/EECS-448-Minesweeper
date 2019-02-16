@@ -1,5 +1,10 @@
 require_relative 'Board'
 
+#This file serves as the executive controller and will interact with the front end as well as board class
+#All functions are compartmentalized, and clicks and text input should call specific functions below that make the game run
+#These functions are set to make the actual game run (for the most part), but not to affect the view controller (front-end people)
+#
+
 class ExecutiveController < ApplicationController
   
   @board
@@ -10,11 +15,10 @@ class ExecutiveController < ApplicationController
   #initializes board and accepts first guess, then populates board with mines
   #when game starts enter board size and number of mines
   def run()
-    puts "running"
-    arun(5,5,2)  
+    start(5,5,2)  
   end
 
-  def arun(rows, cols, mines)
+  def start(rows, cols, mines)
     #check if values work - !!!!THIS LIKELY NEEDS TO BE CHANGED
     if rows < 2 || cols < 2
         raise RuntimeError.new("Invalid board size")
