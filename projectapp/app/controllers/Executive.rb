@@ -35,6 +35,15 @@ def run()
     rowChoice = gets.chomp.to_i
     colChoice = gets.chomp.to_i
     b1.firstStep(rowChoice,colChoice)
+end
+
+def userLeftClick(row, col)
+    return b1.selectSpace(row, col)
+end
+
+def wonGame()
+    
+end
 
     #while the game is not over, allow user input
     while !@gameOver && !@wonGame
