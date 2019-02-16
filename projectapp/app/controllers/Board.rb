@@ -12,6 +12,7 @@ class Board
 		#track number of mines correctly flagged
 		@m_numMinesFlagged = 0
 		@m_board = Array.new(rows){Array.new(cols){BoardSpace.new()}}
+		puts "Board initialized"
 	end
 
 	#returns number of rows

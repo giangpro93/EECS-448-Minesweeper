@@ -3,13 +3,18 @@ require_relative 'Board'
 class ExecutiveController < ApplicationController
   
   @board
-  @m_rows = 0
-  @m_cols = 0
-  @m_numMines = 0
+  @m_rows = 5
+  @m_cols = 5
+  @m_numMines = 5
 
   #initializes board and accepts first guess, then populates board with mines
   #when game starts enter board size and number of mines
-  def initialize(rows, cols, mines)
+  def run()
+    puts "running"
+    arun(5,5,2)  
+  end
+
+  def arun(rows, cols, mines)
     #check if values work - !!!!THIS LIKELY NEEDS TO BE CHANGED
     if rows < 2 || cols < 2
         raise RuntimeError.new("Invalid board size")
@@ -21,10 +26,12 @@ class ExecutiveController < ApplicationController
     @m_rows = rows
     @m_cols = cols
     @m_numMines = mines
+
+    mainRun()
   end
 
 
-  def run
+  def mainRun
     @Board = Board.new(@m_rows, @m_cols, @m_numMines)
   end
 
@@ -42,6 +49,7 @@ class ExecutiveController < ApplicationController
         {
           #exit game with a win
         }
+      end
 
     else
       #end the game
