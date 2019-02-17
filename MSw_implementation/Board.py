@@ -162,16 +162,4 @@ class Board:
 
 	#end of Executive call function
 	#------------------------------
-<<<<<<< HEAD
 
-
-
-
-
-obj = Board(10,10,10)
-obj.firstStep(5,5)
-obj.printBoard()
-obj.showBoard()
-obj.boardToJson()
-=======
->>>>>>> 4680d2dd61b56778ad4197f75c740a000622d669
