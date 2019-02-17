@@ -8,11 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    """Fetches rows from a Bigtable.
-
-    Retrieves rows pertaining to the given keys from the Table instance
-    represented by big_table.  Silly things may happen if
-    other_silly_variable is not None.
+    """main post
 
     Args:
         None
@@ -27,6 +23,14 @@ def main():
     if request.method == 'GET':
         return render_template('index.html')
 
+@app.route('/api/newboard', methods=['POST'])
+def api_newboard():
+    print(request.form.to_dict())
+    return "newboard"
+
+@app.route('/api/save', methods=['POST'])
+def api_save():
+    return "save"
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()
@@ -36,4 +40,4 @@ def handle_request(request_data):
 if __name__ == '__main__':
     if not os.path.isfile('database.db'):
         initializeDatabase()
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=3001)
