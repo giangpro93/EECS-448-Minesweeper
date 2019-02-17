@@ -2,6 +2,7 @@ $board = $('#board');
 
 var cols = null;
 var rows = null;
+let userID = null;
 
 function onSubmit(){
   const url='api/createBoard';
@@ -9,7 +10,7 @@ function onSubmit(){
   rows = document.getElementById("num_rows").value;
   cols = document.getElementById("num_cols").value;
   const mines = document.getElementById('num_mines').value;
-  const userID = createUniqueID();
+  userID = createUniqueID();
   $.post(url, {
     json_string: JSON.stringify({rows: rows, cols: cols, mines: mines, userID: userID})
   });
@@ -73,7 +74,7 @@ $board.on('click', '.col.hidden', function(e){
     }
 
     //send row and col value in a string with JSON to url
-    let data = $.post(url, {
+    let data=$.post(url, {
       json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
     });
     data = data
