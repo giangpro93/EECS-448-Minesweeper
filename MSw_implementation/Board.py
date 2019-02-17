@@ -1,4 +1,5 @@
 from BoardSpace import BoardSpace, getSpace, showSpace
+import random
 
 class Board:
 
@@ -9,7 +10,6 @@ class Board:
 		self.m_cols = cols
 		self.m_numMines = mines
 		self.m_numFlags = mines
-		#track number of mines correctly flagged
 		self.m_numMinesFlagged = 0
 		self.m_board = []
 		for r in range(0,rows):
@@ -19,30 +19,28 @@ class Board:
 
 
 	#prints board to terminal(currently)
-	def printBoard():
-		for x in range(0,m_rows):
-			for y in range(0,m_cols):
-				print m_board[x][y].getSpace()
-				print " "
-			print "\n"
+	def printBoard(self):
+		for x in range(0,self.m_rows):
+			for y in range(0,self.m_cols):
+				print(getSpace(self.m_board[x][y]), end=' ')
+			print()
 
 	#shows either bomb or number of spaces around bomb
-	def showBoard():
-		for x in range(0,m_rows):
-			for y in range (0,m_cols):
-				print m_board[x][y].showSpace()
-				print " "
-			print "\n"
+	def showBoard(self):
+		for x in range(0,self.m_rows):
+			for y in range (0,self.m_cols):
+				print(showSpace(self.m_board[x][y]), end='')
+			print()
 
 	#shows flags on the board
-	def showFlags():
+	def showFlags(self):
 		for x in (m_rows-1):
 			for y in (m_cols-1):
 				if m_board[x][y].isFlagged():
-					print "f"
+					print("f")
 				else:
-					print "0"
-			print "\n"
+					print("0")
+			print('\0')
 
 	#takes first step, then places all bombs
 	def firstStep(self, xpos, ypos):
@@ -56,60 +54,48 @@ class Board:
 
 		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = self.m_cols * self.m_rows
-		mineIndex = []
-		for x in range(0, maxIndex-1):
-			mineIndex.append(False)
+		mineIndex = [False] * (maxIndex-1)
 
 		#initializes a certian number of mines
 		for x in range(0, self.m_numMines):
 			mineIndex[x] = True
 
 		#shuffle the array to achieve randomness
-		mineIndex = mineIndex.shuffle()
+		random.shuffle(mineIndex)
 
 		#copy 1D array into 2D array, adjusting for xpos,ypos
 		collision = 0
-		for i in self.m_rows:
-			for j in self.m_cols:
-				if i == xpos and j == ypos:
+		for i in range(0, self.m_rows):
+			for j in range(0,self.m_cols):
+				if i == ypos and j == xpos:
 					collision = 1
-				elif (mineIndex[i+(j*self.m_rows)-collision]):
-					self.m_board[i][j].setMine()
+				elif (mineIndex[j+(i*self.m_cols)-collision]):
+					self.m_board[i][j].isMine = True
 
+	def calculateNearby(self):
+		for i in range(0, self.m_rows):
+			for j in range(0, self.m_cols):
+				if not self.m_board[i][j].isMine:
+					self.m_board[i][j].setNumMines = self.calcAround(i,j)
 
-	def calculateNearby():
-		for i in m_rows:
-			for j in m_cols:
-				if(not m_board[i][j].isThisAMine()):
-					m_board[i][j].setNumMines(calcAround(i,j))
-
-
-	def calculateNearby():
-		for i in range(0, m_rows):
-			for j in range(0, m_cols):
-				if not m_board[i][j].isThisAMine():
-					m_board[i][j].setNumMines(calcAround(i,j))
-
-	def calcAround(xpos,ypos):
+	def calcAround(self,xpos,ypos):
 		count = 0
 		for x in range(xpos - 1, xpos + 1):
 			for y in range(ypos - 1, xpos + 1):
-				if (x != xpos or y != ypos and board[x][y].isThisAMine()):
+				if (x != xpos or y != ypos and self.m_board[x][y].isMine):
 					count+=1
 
 		return count
 
 
 
-	def recUnhide(xpos,ypos):
-		if m_board[xpos][ypos].getNumMines() == 0 and m_board[xpos][ypos].isThisHidden():
-			m_board[xpos][ypos].unhide()
+	def recUnhide(self, xpos,ypos):
+		if self.m_board[xpos][ypos].numMines == 0 and self.m_board[xpos][ypos].isHidden:
 			for x in range(xpos-1, xpos+1):
 				for y in range(ypos-1, ypos+1):
 					if x != xpos and y != ypos:
-						recUnhide(x, y)
-		else:
-			m_board[xpos][ypos].unhide()
+						self.recUnhide(x, y)
+		self.m_board[xpos][ypos].isHidden = False
 
 	#-------------------------
 	#methods for Executive to call (excluding initialize)
@@ -139,14 +125,14 @@ class Board:
 
 	#user clicks a spot
 	#returns true if a mine is hit, else false
-	def selectSpace(row, col):
+	def selectSpace(self, row, col):
 		#if the selected space is a mine
-		if m_board[row][col].isThisAMine():
+		if self.m_board[row][col].isMine:
 			return True
 		else:
 			#check if this spot is adjacent to other mines
 			#if not, reveal 8 surrounding spaces in recursive function
-			recUnhide(row,col)
+			self.recUnhide(row,col)
 
 			#return false
 			return False
@@ -167,5 +153,7 @@ class Board:
 
 
 
-obj = Board(10,10,3)
-obj.firstStep(1,1)
+obj = Board(10,10,99)
+obj.firstStep(5,5)
+obj.printBoard()
+obj.showBoard()
