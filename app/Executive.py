@@ -5,27 +5,19 @@ import json
 class Executive:
 
     '''Define member variables'''
-    m_rows = 0
-    m_cols = 0
-    m_numMines = 0
-    gameOver = False
-    wonGame = False
     m_board = Board(5, 5, 2)
     firstMove = True
+    m_userID = 0
 
-    def __init__(self, rows, cols, numMines):
+    def __init__(self, rows, cols, numMines, userID):
         if rows < 2 or cols < 2:
             raise RuntimeError('Invalid board size')
         if numMines < 1 or numMines > rows * cols - 1:
             raise RuntimeError('Invalid number of mines')
 
-        self.m_rows = rows
-        self.m_cols = cols
-        self.m_numMines = numMines
-        self.gameOver = False
-        self.wonGame = False
-        self.m_board = Board(self.m_rows, self.m_cols, self.m_numMines)
+        self.m_board = Board(rows, cols, numMines)
         self.firstMove = True
+        self.m_userID = userID
         return
 
     def leftClick(self, row, col):
@@ -56,3 +48,6 @@ class Executive:
             return 1
         else:
             return 0
+
+    def getUserID(self):
+        return self.m_userID
