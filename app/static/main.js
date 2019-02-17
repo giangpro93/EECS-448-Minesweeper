@@ -43,12 +43,17 @@ function gameOver(){
 }
 
 $board.bind('contextmenu', function(e){
+      const url = 'api/toggleFlag';
       //disable context menu if right-click on board and post data
+      const rowVal = $(this).data('row');
+      const colVal = $(this).data('col');
       if(e.which == 3){
         e.preventDefault();
-        $(this).click();
-
-
+        const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
+        $('<p class=divText>' + '<|' + '</p>').appendTo($thisSpace);
+        $.post(url, {
+          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
+        });
       }
 });
 
@@ -60,8 +65,8 @@ $board.on('click', '.col.hidden', function(e){
     const colVal = $block.data('col');
 
     if(e.which == 3 ){
-      let thisSpace = $('.col.hidden[data-row=${rowVal}][data-col=${colVal}]');
-      $('<div class=divText>' + '<|' + '</div>').appendTo(thisSpace);
+      const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
+      $('<div class=divText>' + '<|' + '</div>').appendTo($thisSpace);
       $.post(url, {
         json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
       });
@@ -86,17 +91,17 @@ $board.on('click', '.col.hidden', function(e){
           countRow++;
         }
 
-        let curSpace = $('.col.hidden[data-row=${countRow}][data-col=${countCol}]');
+        let $curSpace = $(`.col.hidden[data-row=${countRow}][data-col=${countCol}]`);
 
         if(data[i] == '0'){
-          clearSpace(curSpace);
+          clearSpace($curSpace);
         }
         else if(data[i] == 'f'){
-          flagSpace(curSpace);
+          flagSpace($curSpace);
         }
         else{
           var numAdjacent = data[i];
-          $('<div class=divText>' + numAdjacent + '</div>').appendTo(curSpace);
+          $('<div class=divText>' + numAdjacent + '</div>').appendTo($curSpace);
         }
 
         counCol++;
