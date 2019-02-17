@@ -54,6 +54,7 @@ def api_selectSpace(self):
     for i in self.games:
         if (games[i].getUserID() == '''passed in userID'''):
             #call either right or left click method
+            print(i)
 
     return str(r)
 
