@@ -4,6 +4,7 @@ import random
 class Board:
 
 
+
 	#initializes the board
 	def __init__(self, rows, cols, mines):
 		self.m_rows = rows
