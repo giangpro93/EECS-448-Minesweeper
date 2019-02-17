@@ -54,6 +54,13 @@ class Board:
 
 		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = self.m_cols * self.m_rows
+		if (ypos == 0 or ypos == self.m_rows - 1):
+			maxIndex -= 3
+			if (xpos == 0 or xpos == self.m_cols - 1):
+				maxIndex -= 2
+		else:
+			if (xpos == 0 or xpos == self.m_cols - 1):
+				maxIndex -= 3
 		mineIndex = [False] * (maxIndex-1)
 
 		#initializes a certian number of mines
@@ -67,8 +74,8 @@ class Board:
 		collision = 0
 		for i in range(0, self.m_rows):
 			for j in range(0,self.m_cols):
-				if i == ypos and j == xpos:
-					collision = 1
+				if abs(i-ypos) <= 1 and abs(j-xpos) <= 1:
+					collision += 1
 				elif (mineIndex[j+(i*self.m_cols)-collision]):
 					self.m_board[i][j].isMine = True
 
