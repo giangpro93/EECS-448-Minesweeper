@@ -48,16 +48,25 @@ Attendees: Michael, Nathan
 
 Location: Jayhawker Towers
 
-###Accomplishments
-Generated rails server
-Successfully got aspects of MVC to work
+###Accomplishments 
+Generated rails server Successfully got aspects of MVC to work
 
 ##Meeting #4 - 2:21 - 4:00
 
-Attendees: Tiernon, Michael, Nathan
+Attendees: Tiernon, Michael, Nathan, Colin
 
 Location: Legends Apartments
 
+###Accomplishments 
+Decided to abandon ruby on rails and use python backend
+Convert ruby files to python
+
+##Meeting #5 - 10:00 - 1:00
+
+Attendees: Tiernon, Michael, Nathan, Andre
+
+Locations: Legends Apartments
+
 ###Accomplishments
-Generated board in server
-Call executive controller functions from view
+Rewrite executive class in python to function w/ JS
+Transfer data via JSON
