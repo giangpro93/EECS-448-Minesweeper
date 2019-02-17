@@ -13,7 +13,11 @@ class Board:
 		m_numFlags = mines
 		#track number of mines correctly flagged
 		m_numMinesFlagged = 0
-		m_board = [[BoardSpace * m_cols] * m_rows]
+		m_board = []
+		for r in range(0,rows):
+			m_board.append([])
+			for c in range(0,cols):
+				m_board[r].append(BoardSpace())
 
 
 	#prints board to terminal(currently)
