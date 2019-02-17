@@ -5,31 +5,31 @@ class Board:
 
 	#initializes the board
 	def __init__(rows, cols, mines):
-		m_rows = rows
-		m_cols = cols
-		m_numMines = mines
-		m_numFlags = mines
+		self.m_rows = rows
+		self.m_cols = cols
+		self.m_numMines = mines
+		self.m_numFlags = mines
 		#track number of mines correctly flagged
-		m_numMinesFlagged = 0
-		m_board = []
+		self.m_numMinesFlagged = 0
+		self.m_board = []
 		for r in range(0,rows):
-			m_board.append([])
+			self.m_board.append([])
 			for c in range(0,cols):
-				m_board[r].append(BoardSpace())
+				self.m_board[r].append(BoardSpace())
 
 
 	#prints board to terminal(currently)
 	def printBoard():
-		for x in m_rows:
-			for y in m_cols:
+		for x in range(0,m_rows):
+			for y in range(0,m_cols):
 				print m_board[x][y].getSpace()
 				print " "
 			print "\n"
 
 	#shows either bomb or number of spaces around bomb
 	def showBoard():
-		for x in m_rows:
-			for y in m_cols:
+		for x in range(0,m_rows):
+			for y in range (0,m_cols):
 				print m_board[x][y].showSpace()
 				print " "
 			print "\n"
@@ -59,7 +59,7 @@ class Board:
 		mineIndex = Array.new(maxIndex-1, false)
 
 		#initializes a certian number of mines
-		for x in (0...m_numMines):
+		for x in m_numMines:
 			mineIndex[x] = True
 		end
 
@@ -70,7 +70,7 @@ class Board:
 		collision = 0
 		for i in m_rows:
 			for j in m_cols:
-				if i == xpos && j == ypos:
+				if i == xpos and j == ypos:
 					collision = 1
 				elif (mineIndex[i+(j*m_rows)-collision]):
 					m_board[i][j].setMine()
@@ -93,21 +93,21 @@ class Board:
 		count = 0
 		for x in range(xpos - 1, xpos + 1):
 			for y in range(ypos - 1, xpos + 1):
-				if (x != xpos || y != ypos && board[x][y].isThisAMine():
-					count++
+				if (x != xpos or y != ypos and board[x][y].isThisAMine()):
+					count+=1
 
 		return count
 
 
 
 	def recUnhide(xpos,ypos):
-		if m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden():
+		if m_board[xpos][ypos].getNumMines() == 0 and m_board[xpos][ypos].isThisHidden():
 			m_board[xpos][ypos].unhide()
 			for x in range(xpos-1, xpos+1):
 				for y in range(ypos-1, ypos+1):
-					if x != xpos && y != ypos:
+					if x != xpos and y != ypos:
 						recUnhide(x, y)
-		else
+		else:
 			m_board[xpos][ypos].unhide()
 
 	#-------------------------
@@ -116,7 +116,7 @@ class Board:
 	#toggleFlag Space if valid
 	def toggleFlagSpace(row, col):
 		#check if we can flag the space
-		if not m_board[row][col].isFlagged() && m_numFlags > 0:
+		if not m_board[row][col].isFlagged() and m_numFlags > 0:
 			m_board[row][col].toggleFlag()
 			m_numFlags -= 1
 			#if the space is a mine, update correctedly flagged count
@@ -127,7 +127,7 @@ class Board:
 			m_board[row][col].toggleFlag()
 			m_numFlags += 1
 			#if the space is a mine, update correctedly flagged count
-			if m_board[row][col].isThisAMine()
+			if m_board[row][col].isThisAMine():
 				m_numMinesFlagged -= 1
 
 		#throw an exception if you're out of flags
@@ -167,3 +167,6 @@ class Board:
 
 
 obj = Board(10,10,3)
+firstStep(1,1)
+
+
