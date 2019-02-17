@@ -52,7 +52,7 @@ $board.bind('contextmenu', function(e){
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
         $('<p class=divText>' + '<|' + '</p>').appendTo($thisSpace);
         $.post(url, {
-          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
+          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
         });
       }
 });
@@ -68,13 +68,13 @@ $board.on('click', '.col.hidden', function(e){
       const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
       $('<div class=divText>' + '<|' + '</div>').appendTo($thisSpace);
       $.post(url, {
-        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
+        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
       });
     }
 
     //send row and col value in a string with JSON to url
     let data = $.post(url, {
-      json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false"})
+      json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
     });
     data = data
     if(data == "gameOver"){
@@ -101,10 +101,10 @@ $board.on('click', '.col.hidden', function(e){
         }
         else{
           var numAdjacent = data[i];
-          $('<div class=divText>' + numAdjacent + '</div>').appendTo($curSpace);
+          $curSpace[0].innerHTML = numAdjacent
         }
 
-        counCol++;
+        countCol++;
 
       }
 
