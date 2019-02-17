@@ -1,6 +1,4 @@
-from BoardSpace import BoardSpace
-from BoardSpace import getSpace
-from BoardSpace import showSpace
+from BoardSpace import BoardSpace, getSpace, showSpace
 
 class Board:
 
