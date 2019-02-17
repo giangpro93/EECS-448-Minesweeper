@@ -1,0 +1,42 @@
+body {
+  background-color: #f58b57;
+  font-family: helvetica;
+  text-align: center;
+}
+
+form {
+
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.col{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.col.hidden{
+  background-color: grey;
+  cursor: pointer;
+}
+
+.col.hidden:hover {
+  background-color: white;
+}
+
+.row{
+  font-size: 0px;
+}
+
+#board {
+  border: 1px solid black;
+  display: inline-block;
+}

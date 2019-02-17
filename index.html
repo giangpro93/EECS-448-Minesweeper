@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Minesweeper</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <!-- include jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Minesweeper</h1>
+  <form id = "board-def" style = "display: block" onsubmit="return onSubmit();">
+    <p>Board Size: <input type = "number" id = "num_rows"/>  x <input type = "number" id = "num_cols"/></p>
+    <p><br>Number of mines: <input type = "number" id = "num_mines"/></p><br>
+    <input type = "submit" value = "Submit"><br>
+  </form>
+  <div id = "board" ></div>
+  <script src = "main.js"></script>
+</body>
+</html>
