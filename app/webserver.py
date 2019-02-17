@@ -2,10 +2,14 @@ from flask import Flask, render_template, request, Response
 import os.path
 import requests
 import json
-from Board import Board
+from Executive import Executive
 
 app = Flask(__name__)
-myBoard = ""
+
+#hold lists of user games
+games = []
+#hold current userID (increments by 1)
+m_userID = 80046264357
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -25,19 +29,24 @@ def main():
         return render_template('index.html')
 
 @app.route('/api/createBoard', methods=['POST'])
-def api_newboard():
+def api_newboard(self):
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string)
     rows = (int)(d['rows'])
     cols = (int)(d['cols'])
     mines = (int)(d['mines'])
-    myBoard = Board(rows,cols,mines)
+
+    #add new game to list of games
+    newGame = Executive(rows, cols, mines, self.m_userID)
+    games.append(newGame)
+    #increment userID by 1
+    self.m_userID += 1
     # POST with JSON 
     return str(True)
 
 @app.route('/api/selectSpace', methods=['POST'])
-def api_selectSpace():
+def api_selectSpace(self):
     s = request.form.to_dict()['json_string']
     # POST with JSON
     json_acceptable_string = s.replace("'", "\"")
@@ -45,6 +54,14 @@ def api_selectSpace():
     rows = (d['rows'])
     cols = (d['cols'])
     rightClick = (d['rightClick'])
+
+    for i in self.games:
+        if (games[i].getUserID() == '''passed in userID'''):
+            #call either right or left click method
+            if rightClick is True:
+                result = games[i].rightClick(rows, cols)
+            else:
+                games[i].leftClick(rows, cols)
 
     
 
