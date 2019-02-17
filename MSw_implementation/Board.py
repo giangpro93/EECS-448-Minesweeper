@@ -69,12 +69,12 @@ class Board:
 		mineIndex = mineIndex.shuffle()
 
 		#copy 1D array into 2D array, adjusting for xpos,ypos
-		colision = 0
+		collision = 0
 		for i in m_rows:
 			for j in m_cols:
-				if i == xpos && j == ypos
-					colision = 1
-				elif (mineIndex[i+(j*m_rows)-colision]):
+				if i == xpos && j == ypos:
+					collision = 1
+				elif (mineIndex[i+(j*m_rows)-collision]):
 					m_board[i][j].setMine()
 
 
@@ -86,10 +86,10 @@ class Board:
 
 
 	def calculateNearby():
-		for i in (0...@m_rows)
-			for j in (0...@m_cols)
-				if(!@m_board[i][j].isThisAMine())
-					@m_board[i][j].setNumMines(calcAround(i,j))
+		for i in range(0, m_rows):
+			for j in range(0, m_cols):
+				if not m_board[i][j].isThisAMine():
+					m_board[i][j].setNumMines(calcAround(i,j))
 
 	def calcAround(xpos,ypos):
 		count = 0
@@ -103,14 +103,14 @@ class Board:
 
 
 	def recUnhide(xpos,ypos):
-			if m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden():
-				m_board[xpos][ypos].unhide()
-				for x in range(xpos-1, xpos+1):
-					for y in range(ypos-1, ypos+1):
-						if x != xpos && y != ypos:
-							recUnhide(x, y)
-			else
-				m_board[xpos][ypos].unhide()
+		if m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden():
+			m_board[xpos][ypos].unhide()
+			for x in range(xpos-1, xpos+1):
+				for y in range(ypos-1, ypos+1):
+					if x != xpos && y != ypos:
+						recUnhide(x, y)
+		else
+			m_board[xpos][ypos].unhide()
 
 	#-------------------------
 	#methods for Executive to call (excluding initialize)
@@ -118,25 +118,23 @@ class Board:
 	#toggleFlag Space if valid
 	def toggleFlagSpace(row, col):
 		#check if we can flag the space
-		if !@m_board[row][col].isFlagged() && @m_numFlags > 0
-			@m_board[row][col].toggleFlag()
-			@m_numFlags = @m_numFlags - 1
+		if not m_board[row][col].isFlagged() && m_numFlags > 0:
+			m_board[row][col].toggleFlag()
+			m_numFlags -= 1
 			#if the space is a mine, update correctedly flagged count
-			if @m_board[row][col].isThisAMine()
-				@m_numMinesFlagged = @m_numMinesFlagged + 1
-			end
+			if m_board[row][col].isThisAMine():
+				m_numMinesFlagged += 1
 		#check if space is already flagged, then remove
-		elsif @m_board[row][col].isFlagged()
-			@m_board[row][col].toggleFlag()
-			@m_numFlags = @m_numFlags + 1
+		elif m_board[row][col].isFlagged():
+			m_board[row][col].toggleFlag()
+			m_numFlags += 1
 			#if the space is a mine, update correctedly flagged count
-			if @m_board[row][col].isThisAMine()
-				@m_numMinesFlagged = @m_numMinesFlagged - 1
-			end
+			if m_board[row][col].isThisAMine()
+				m_numMinesFlagged -= 1
+
 		#throw an exception if you're out of flags
-		else
-			raise RuntimeError.new("Out of flags")
-		end
+		else:
+			raise RuntimeError("Out of flags")
 
 
 
@@ -144,26 +142,22 @@ class Board:
 	#returns true if a mine is hit, else false
 	def selectSpace(row, col):
 		#if the selected space is a mine
-		if @m_board[row][col].isThisAMine()
-			return true
-		else
+		if m_board[row][col].isThisAMine():
+			return True
+		else:
 			#check if this spot is adjacent to other mines
 			#if not, reveal 8 surrounding spaces in recursive function
 			recUnhide(row,col)
 
 			#return false
-			return false
-		end
-
-	end
+			return False
 
 	#check if the user has flagged all mines - true if user has won, else false
 	def userWin():
-		if @m_numMines == @m_numMinesFlagged
-			return true
-		else
-			return false
-		end
+		if m_numMines == m_numMinesFlagged:
+			return True
+		else:
+			return False
 
 
 
