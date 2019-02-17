@@ -38,7 +38,7 @@ def api_newboard():
     newGame = Executive('''rows, cols, numMines''', userID)
     games.append(newGame)
     #increment userID by 1
-    userID = userID + 1
+    userID += 1
 
     # POST with JSON
     return str(True)
