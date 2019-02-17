@@ -76,7 +76,7 @@ class Board:
 					colision = 1
 				elif (mineIndex[i+(j*m_rows)-colision]):
 					m_board[i][j].setMine()
-	
+
 
 	def calculateNearby():
 		for i in m_rows:
@@ -84,7 +84,7 @@ class Board:
 				if(not m_board[i][j].isThisAMine()):
 					m_board[i][j].setNumMines(calcAround(i,j))
 
-	
+
 	def calculateNearby():
 		for i in (0...@m_rows)
 			for j in (0...@m_cols)
@@ -105,35 +105,12 @@ class Board:
 	def recUnhide(xpos,ypos):
 			if m_board[xpos][ypos].getNumMines() == 0 && @m_board[xpos][ypos].isThisHidden():
 				m_board[xpos][ypos].unhide()
-				if((ypos < @m_cols && ypos >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-					recUnhide(xpos+1,ypos)
-				end
-				if((ypos < @m_cols && ypos >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-					recUnhide(xpos-1,ypos)
-				end
-				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
-					recUnhide(xpos,ypos+1)
-				end
-				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos) < @m_rows && (xpos) >= 0))
-					recUnhide(xpos,ypos-1)
-				end
-				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-					recUnhide(xpos+1,ypos+1)
-				end
-				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos+1) < @m_rows && (xpos+1) >= 0))
-					recUnhide(xpos+1,ypos-1)
-				end
-				if(((ypos+1) < @m_cols && (ypos+1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-					recUnhide(xpos-1,ypos+1)
-				end
-				if(((ypos-1) < @m_cols && (ypos-1) >= 0) && ((xpos-1) < @m_rows && (xpos-1) >= 0))
-					recUnhide(xpos-1,ypos-1)
-				end
+				for x in range(xpos-1, xpos+1):
+					for y in range(ypos-1, ypos+1):
+						if x != xpos && y != ypos:
+							recUnhide(x, y)
 			else
-				@m_board[xpos][ypos].unhide()
-			end
-
-		end
+				m_board[xpos][ypos].unhide()
 
 	#-------------------------
 	#methods for Executive to call (excluding initialize)
