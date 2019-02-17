@@ -5,7 +5,7 @@ class Board:
 
 
 	#initializes the board
-	def __init__(self,rows, cols, mines):
+	def __init__(self, rows, cols, mines):
 		self.m_rows = rows
 		self.m_cols = cols
 		self.m_numMines = mines
@@ -34,9 +34,9 @@ class Board:
 
 	#shows flags on the board
 	def showFlags(self):
-		for x in (m_rows-1):
-			for y in (m_cols-1):
-				if m_board[x][y].isFlagged():
+		for x in (self.m_rows-1):
+			for y in (self.m_cols-1):
+				if self.m_board[x][y].isFlagged():
 					print("f")
 				else:
 					print("0")
@@ -102,21 +102,21 @@ class Board:
 	#methods for Executive to call (excluding initialize)
 
 	#toggleFlag Space if valid
-	def toggleFlagSpace(row, col):
+	def toggleFlagSpace(self, row, col):
 		#check if we can flag the space
-		if not m_board[row][col].isFlagged() and m_numFlags > 0:
-			m_board[row][col].toggleFlag()
-			m_numFlags -= 1
+		if not self.m_board[row][col].isFlagged() and self.m_numFlags > 0:
+			self.m_board[row][col].toggleFlag()
+			self.m_numFlags -= 1
 			#if the space is a mine, update correctedly flagged count
-			if m_board[row][col].isThisAMine():
-				m_numMinesFlagged += 1
+			if self.m_board[row][col].isThisAMine():
+				self.m_numMinesFlagged += 1
 		#check if space is already flagged, then remove
-		elif m_board[row][col].isFlagged():
-			m_board[row][col].toggleFlag()
-			m_numFlags += 1
+		elif self.m_board[row][col].isFlagged():
+			self.m_board[row][col].toggleFlag()
+			self.m_numFlags += 1
 			#if the space is a mine, update correctedly flagged count
-			if m_board[row][col].isThisAMine():
-				m_numMinesFlagged -= 1
+			if self.m_board[row][col].isThisAMine():
+				self.m_numMinesFlagged -= 1
 
 		#throw an exception if you're out of flags
 		else:
@@ -139,8 +139,8 @@ class Board:
 			return False
 
 	#check if the user has flagged all mines - true if user has won, else false
-	def userWin():
-		if m_numMines == m_numMinesFlagged:
+	def userWin(self):
+		if self.m_numMines == self.m_numMinesFlagged:
 			return True
 		else:
 			return False
