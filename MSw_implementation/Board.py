@@ -83,13 +83,13 @@ class Board:
 		for i in range(0, self.m_rows):
 			for j in range(0, self.m_cols):
 				if not self.m_board[i][j].isMine:
-					self.m_board[i][j].setNumMines = self.calcAround(i,j)
+					self.m_board[i][j].numMines = self.calcAround(i,j)
 
 	def calcAround(self,xpos,ypos):
 		count = 0
-		for x in range(max(xpos - 1, 0), min(xpos + 2,m_cols)):
-			for y in range(max(ypos - 1, 0), min(xpos + 2,m_rows):
-				if (x != xpos or y != ypos and self.m_board[x][y].isMine):
+		for x in range(max(xpos - 1, 0), min(xpos + 2,self.m_cols)):
+			for y in range(max(ypos - 1, 0), min(ypos + 2,self.m_rows)):
+				if ((x != xpos or y != ypos) and self.m_board[x][y].isMine):
 					count+=1
 
 		return count
@@ -98,9 +98,10 @@ class Board:
 
 	def recUnhide(self, xpos,ypos):
 		if self.m_board[xpos][ypos].numMines == 0 and self.m_board[xpos][ypos].isHidden:
-			for x in range(max(xpos - 1, 0), min(xpos + 2,m_cols)):
-				for y in range(max(ypos - 1, 0), min(xpos + 2,m_rows):
-					if x != xpos and y != ypos:
+			self.m_board[xpos][ypos].isHidden = False
+			for x in range(max(xpos - 1, 0), min(xpos + 2,self.m_cols)):
+				for y in range(max(ypos - 1, 0), min(ypos + 2,self.m_rows)):
+					if x != xpos or y != ypos:
 						self.recUnhide(x, y)
 		self.m_board[xpos][ypos].isHidden = False
 
@@ -160,7 +161,7 @@ class Board:
 
 
 
-obj = Board(10,10,99)
+obj = Board(10,10,10)
 obj.firstStep(5,5)
 obj.printBoard()
 obj.showBoard()
