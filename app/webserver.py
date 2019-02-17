@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, Response
-from databaseHandler import initializeDatabase
 import os.path
 import requests
 
@@ -38,6 +37,4 @@ def handle_request(request_data):
 
 
 if __name__ == '__main__':
-    if not os.path.isfile('database.db'):
-        initializeDatabase()
     app.run(host='0.0.0.0', port=3001)
