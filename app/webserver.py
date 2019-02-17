@@ -23,19 +23,22 @@ def main():
     if request.method == 'GET':
         return render_template('index.html')
 
+
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
     print(request.form.to_dict()['json_string'])
-    # POST with JSON 
+    # POST with JSON
     return str(True)
+
 
 @app.route('/api/selectSpace', methods=['GET', 'POST'])
 def api_selectSpace():
     print(request.form.to_dict()['json_string'])
-    # POST with JSON 
-    payload = [[1,2,3],[1,2,3],[-1,-1,-1]]
+    # POST with JSON
+    payload = [[1, 2, 3], [1, 2, 3], [-1, -1, -1]]
     r = json.dumps(payload)
     return str(r)
+
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()
