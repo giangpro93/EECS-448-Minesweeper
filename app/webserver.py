@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, Response
 import os.path
 import requests
 import json
+from Board import Board
 
 app = Flask(__name__)
 
@@ -26,16 +27,23 @@ def main():
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
     print(request.form.to_dict()['json_string'])
+    
     # POST with JSON 
     return str(True)
 
-@app.route('/api/selectSpace', methods=['GET', 'POST'])
+@app.route('/api/selectSpace', methods=['POST'])
 def api_selectSpace():
-    print(request.form.to_dict()['json_string'])
-    # POST with JSON 
-    payload = [[1,2,3],[1,2,3],[-1,-1,-1]]
-    r = json.dumps(payload)
-    return str(r)
+    s = request.form.to_dict()['json_string']
+    # POST with JSON
+    json_acceptable_string = s.replace("'", "\"")
+    d = json.loads(json_acceptable_string)
+    rows = (d['rows'])
+    cols = (d['cols'])
+    rightClick = (d['rightClick'])
+
+    
+
+    return str(d)
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()
