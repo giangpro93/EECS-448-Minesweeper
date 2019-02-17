@@ -150,12 +150,3 @@ class Board:
 
 	#end of Executive call functions
 	#------------------------------
-
-
-
-
-
-obj = Board(10,10,10)
-obj.firstStep(5,5)
-obj.printBoard()
-obj.showBoard()
