@@ -42,26 +42,29 @@ function gameOver(){
 }
 
 $board.bind('contextmenu', function(e){
-
-      //disable context menu if right-click on board
+      //disable context menu if right-click on board and post data
       if(e.which == 3){
-        event.preventDefault();
+        e.preventDefault();
         $(this).click();
-        /*add flag image here
-        $(this).css('background-image', '(' + flag.jpg + ')');
-        */
-        $.post(url, {
-          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
-        });
+
+
       }
 });
 
-$board.on('click', '.col.hidden', function(){
+$board.on('click', '.col.hidden', function(e){
 
     //get index on grid of click location
     const $block = $(this);
     const rowVal = $block.data('row');
     const colVal = $block.data('col');
+
+    if(e.which == 3 ){
+      let thisSpace = $('.col.hidden[data-row=${rowVal}][data-col=${colVal}]');
+      $('<div class=divText>' + '<|' + '</div>').appendTo(thisSpace);
+      $.post(url, {
+        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
+      });
+    }
 
     //send row and col value in a string with JSON to url
     $.post(url, {
@@ -85,7 +88,7 @@ $board.on('click', '.col.hidden', function(){
             countRow++;
           }
 
-          let curSpace = $('.col.hidden[data-row=${countRow}][data-col=${countCol}]')
+          let curSpace = $('.col.hidden[data-row=${countRow}][data-col=${countCol}]');
 
           if(data[i] == '0'){
             clearSpace(curSpace);
