@@ -1,4 +1,5 @@
 $board = $('#board');
+const url='our_url';
 
 function onSubmit(){
   //get user input
@@ -33,22 +34,56 @@ function createBoard(r, c){
   }
 }
 
+function gameOver(){
+  //reveal all bombs, bring user to welcome page
+}
+
 $board.bind('contextmenu', function(e){
 
       //disable context menu if right-click on board
       if(e.which == 3){
         event.preventDefault();
         $(this).click();
+        /*add flag image here
+        $(this).css('background-image', '(' + flag.jpg + ')');
+        */
+        $.post(url, {
+          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true"})
+        });
       }
 });
 
 $board.on('click', '.col.hidden', function(){
 
-    //get index on grid of click
+    //get index on grid of click location
     const $block = $(this);
     const rowVal = $block.data('row');
     const colVal = $block.data('col');
 
-    console.log(rowVal, colVal);
+    //send row and col value in a string with JSON to url
+    $.post(url, {
+      json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false"})
+    });
+
+    //receive new row and col values to change board
+    $.get(url, function(data){
+
+      if(data.gameOver){
+        gameOver();
+      }
+      else{
+        for(i in data.field){
+          for(j in data.field[i]){
+            if(data.field[i][j] == "adjacent"){
+              var numAdjacent = data.field[i][j].adjacentNum;
+              $('<div class=divText>' + numAdjacent + '</div>').appendTo($block);
+            }
+            else if(data.field[i][j] == "openTile"){
+              $block$(this).css('background-color: ', white);
+            }
+          }
+        }
+      }
+    })
 
 })
