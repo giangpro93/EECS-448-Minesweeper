@@ -1,4 +1,5 @@
-from Board.py import Board #import BoardSpace, getSpace, showSpace
+from Board import Board 
+import json
 
 class Executive:
 
@@ -8,11 +9,8 @@ class Executive:
     m_numMines = 0
     gameOver = False
     wonGame = False
-    m_board = 8
+    m_board = Board(5,5,2)
     firstMove = True
-    
-
-
 
     def __init__(self, rows, cols, numMines):
         if rows < 2 or cols < 2:
@@ -29,31 +27,33 @@ class Executive:
         self.firstMove = True
         return
 
+    
     def leftClick(self, row, col):
         '''returns false is user loses game
             returns true if user made a valid move
         '''
         #if this is user's first move, still need to set mines
         if self.firstMove is True:
-            firstStep(self.m_board, row, col)
+            self.m_board.firstStep(row, col)
             self.firstMove = False
         else:
-            if selectSpace(self.m_Board, row, col) is True:
+            if self.m_board.selectSpace(row, col) is True:
                 return (False)
         return
 
+    
     def rightClick(self, row, col):
         '''returns -1 if user is out of flags
             returns 0 if flag was successfully planted
             returns 1 if user wins (all mines flagged)
         '''
         try:
-            toggleFlagSpace(self.m_board, row, col)
+            self.m_board.toggleFlagSpace(row, col)
         except:
             return (-1)
         
         #check if user has won the game (flagged all mines)
-        if userWin(self.m_board) is True:
+        if self.m_board.userWin() is True:
             return 1
         else:
             return 0
