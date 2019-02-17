@@ -46,36 +46,35 @@ class Board:
 
 	#takes first step, then places all bombs
 	def firstStep(self, xpos, ypos):
-		placeBombs(xpos, ypos)
-		calculateNearby()
-		selectSpace(xpos,ypos)
+		self.placeBombs(xpos, ypos)
+		self.calculateNearby()
+		self.selectSpace(xpos,ypos)
 
 
 	#places all mines around the first space stepped on
 	def placeBombs(self, xpos,ypos):
 
 		#initializes a 1D array to randomly place bombs in indicies
-		maxIndex = m_cols * m_rows
+		maxIndex = self.m_cols * self.m_rows
 		mineIndex = []
 		for x in range(0, maxIndex-1):
-			mineIndex.push(False)
+			mineIndex.append(False)
 
 		#initializes a certian number of mines
-		for x in m_numMines:
+		for x in range(0, self.m_numMines):
 			mineIndex[x] = True
-		end
 
 		#shuffle the array to achieve randomness
 		mineIndex = mineIndex.shuffle()
 
 		#copy 1D array into 2D array, adjusting for xpos,ypos
 		collision = 0
-		for i in m_rows:
-			for j in m_cols:
+		for i in self.m_rows:
+			for j in self.m_cols:
 				if i == xpos and j == ypos:
 					collision = 1
-				elif (mineIndex[i+(j*m_rows)-collision]):
-					m_board[i][j].setMine()
+				elif (mineIndex[i+(j*self.m_rows)-collision]):
+					self.m_board[i][j].setMine()
 
 
 	def calculateNearby():
