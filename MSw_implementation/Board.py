@@ -56,7 +56,9 @@ class Board:
 
 		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = m_cols * m_rows
-		mineIndex = Array.new(maxIndex-1, false)
+		mineIndex = []
+		for x in range(0, maxIndex-1):
+			mineIndex.push(False)
 
 		#initializes a certian number of mines
 		for x in m_numMines:
@@ -168,5 +170,3 @@ class Board:
 
 obj = Board(10,10,3)
 obj.firstStep(1,1)
-
-
