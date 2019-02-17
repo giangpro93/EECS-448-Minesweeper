@@ -80,7 +80,7 @@ def api_selectSpace():
 
     
 
-    return str(d)
+
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()
