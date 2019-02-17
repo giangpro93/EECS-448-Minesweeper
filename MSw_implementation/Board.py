@@ -80,8 +80,8 @@ class Board:
 
 	def calcAround(self,xpos,ypos):
 		count = 0
-		for x in range(xpos - 1, xpos + 1):
-			for y in range(ypos - 1, xpos + 1):
+		for x in range(max(xpos - 1, 0), min(xpos + 2,m_cols)):
+			for y in range(max(ypos - 1, 0), min(xpos + 2,m_rows):
 				if (x != xpos or y != ypos and self.m_board[x][y].isMine):
 					count+=1
 
@@ -91,8 +91,8 @@ class Board:
 
 	def recUnhide(self, xpos,ypos):
 		if self.m_board[xpos][ypos].numMines == 0 and self.m_board[xpos][ypos].isHidden:
-			for x in range(xpos-1, xpos+1):
-				for y in range(ypos-1, ypos+1):
+			for x in range(max(xpos - 1, 0), min(xpos + 2,m_cols)):
+				for y in range(max(ypos - 1, 0), min(xpos + 2,m_rows):
 					if x != xpos and y != ypos:
 						self.recUnhide(x, y)
 		self.m_board[xpos][ypos].isHidden = False
