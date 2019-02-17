@@ -60,8 +60,22 @@ def api_selectSpace(self):
             #call either right or left click method
             if rightClick is True:
                 result = games[i].rightClick(rows, cols)
+
+                #handle different cases on right click
+                if result == -1:
+                    #user out of flags
+                    #return unchanged board
+                elif result == 0:
+                    #Flag successfully planted
+                    #return board
+                elif result == 1:
+                    #user has won - END GAME                
             else:
-                games[i].leftClick(rows, cols)
+                result = games[i].leftClick(rows, cols)
+                if result is False:
+                    #user has lost - END GAME
+                else
+                    #return board
 
     
 
