@@ -1,10 +1,16 @@
 from flask import Flask, render_template, request, Response
+from Executive import Executive
 import os.path
 import requests
 import json
 from Board import Board
 
 app = Flask(__name__)
+
+#hold lists of user games
+games = []
+#hold current userID (increments by 1)
+userID = 80046264357
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -24,11 +30,12 @@ def main():
     if request.method == 'GET':
         return render_template('index.html')
 
+
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
     print(request.form.to_dict()['json_string'])
-    
-    # POST with JSON 
+
+    # POST with JSON
     return str(True)
 
 @app.route('/api/selectSpace', methods=['POST'])
@@ -41,9 +48,11 @@ def api_selectSpace():
     cols = (d['cols'])
     rightClick = (d['rightClick'])
 
-    
+
+
 
     return str(d)
+
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()
