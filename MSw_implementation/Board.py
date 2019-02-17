@@ -1,6 +1,6 @@
 from BoardSpace import BoardSpace, getSpace, showSpace
 import random
-
+import json
 class Board:
 
 
@@ -145,9 +145,21 @@ class Board:
 		else:
 			return False
 
+	
+	def boardToJson(self):
+		myBoard = {}
+		space = 0;
+		for x in range(0, self.m_rows):
+			for y in range(0, self.m_cols):
+				myBoard.update({space: getSpace(self.m_board[x][y])})
+				space +=1
+		print (json.dumps(myBoard))
+
+			
 
 
-	#end of Executive call functions
+
+	#end of Executive call function
 	#------------------------------
 
 
@@ -158,3 +170,4 @@ obj = Board(10,10,10)
 obj.firstStep(5,5)
 obj.printBoard()
 obj.showBoard()
+obj.boardToJson()
