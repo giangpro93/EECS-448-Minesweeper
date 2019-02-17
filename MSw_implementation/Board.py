@@ -4,7 +4,7 @@ class Board:
 
 
 	#initializes the board
-	def __init__(rows, cols, mines):
+	def __init__(self,rows, cols, mines):
 		self.m_rows = rows
 		self.m_cols = cols
 		self.m_numMines = mines
@@ -45,14 +45,14 @@ class Board:
 			print "\n"
 
 	#takes first step, then places all bombs
-	def firstStep(xpos, ypos):
+	def firstStep(self, xpos, ypos):
 		placeBombs(xpos, ypos)
 		calculateNearby()
 		selectSpace(xpos,ypos)
 
 
 	#places all mines around the first space stepped on
-	def placeBombs(xpos,ypos):
+	def placeBombs(self, xpos,ypos):
 
 		#initializes a 1D array to randomly place bombs in indicies
 		maxIndex = m_cols * m_rows
@@ -167,6 +167,6 @@ class Board:
 
 
 obj = Board(10,10,3)
-firstStep(1,1)
+obj.firstStep(1,1)
 
 
