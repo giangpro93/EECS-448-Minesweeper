@@ -4,6 +4,7 @@ import json
 class Board:
 
 
+
 	#initializes the board
 	def __init__(self, rows, cols, mines):
 		self.m_rows = rows
@@ -161,6 +162,7 @@ class Board:
 
 	#end of Executive call function
 	#------------------------------
+<<<<<<< HEAD
 
 
 
@@ -171,3 +173,5 @@ obj.firstStep(5,5)
 obj.printBoard()
 obj.showBoard()
 obj.boardToJson()
+=======
+>>>>>>> 4680d2dd61b56778ad4197f75c740a000622d669
