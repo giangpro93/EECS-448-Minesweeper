@@ -3,10 +3,11 @@ $board = $('#board');
 function onSubmit(){
   const rows = document.getElementById("num_rows").value;
   const cols = document.getElementById("num_cols").value;
-  let form = document.getElementById("board-def");
-  form.style.display = 'none';
+  const mines = document.getElementById('num_mines').value;
+
   createUniqueID();
   createBoard(rows, cols);
+  
   return false;
 }
 
