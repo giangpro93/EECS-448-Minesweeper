@@ -51,3 +51,6 @@ class Executive:
 
     def getUserID(self):
         return self.m_userID
+
+    def getJson(self):
+        return self.m_board.boardToJson()

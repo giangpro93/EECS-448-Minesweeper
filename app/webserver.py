@@ -64,10 +64,10 @@ def api_selectSpace(self):
                 #handle different cases on right click
                 if result == -1:
                     #user out of flags
-                    #return unchanged board
+                    return str(games[i].getJson)
                 elif result == 0:
                     #Flag successfully planted
-                    #return board
+                    return str(games[i].getJson)
                 elif result == 1:
                     #user has won - END GAME                
             else:
@@ -75,7 +75,7 @@ def api_selectSpace(self):
                 if result is False:
                     #user has lost - END GAME
                 else
-                    #return board
+                    return str(games[i].getJson)
 
     
 
