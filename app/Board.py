@@ -156,7 +156,7 @@ class Board:
             for y in range(0, self.m_cols):
                 myBoard.update({space: getSpace(self.m_board[x][y])})
                 space += 1
-        print(json.dumps(myBoard))
+        return myBoard
 
     # end of Executive call function
     # ------------------------------
