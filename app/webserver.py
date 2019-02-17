@@ -5,7 +5,7 @@ import json
 from Board import Board
 
 app = Flask(__name__)
-
+myBoard = ""
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -26,8 +26,13 @@ def main():
 
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
-    print(request.form.to_dict()['json_string'])
-    
+    s = request.form.to_dict()['json_string']
+    json_acceptable_string = s.replace("'", "\"")
+    d = json.loads(json_acceptable_string)
+    rows = (int)(d['rows'])
+    cols = (int)(d['cols'])
+    mines = (int)(d['mines'])
+    myBoard = Board(rows,cols,mines)
     # POST with JSON 
     return str(True)
 
