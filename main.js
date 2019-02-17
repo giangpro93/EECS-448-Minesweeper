@@ -74,11 +74,11 @@ $board.on('click', '.col.hidden', function(){
       else{
         for(i in data.field){
           for(j in data.field[i]){
-            if(data.field[i][j] == "adjacent"){
+            if(data.field[i][j].type == "adjacent"){
               var numAdjacent = data.field[i][j].adjacentNum;
               $('<div class=divText>' + numAdjacent + '</div>').appendTo($block);
             }
-            else if(data.field[i][j] == "openTile"){
+            else if(data.field[i][j].type == "openTile"){
               $block$(this).css('background-color: ', white);
             }
           }
