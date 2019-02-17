@@ -16,6 +16,7 @@ class Executive:
             raise RuntimeError('Invalid number of mines')
 
         self.m_board = Board(rows, cols, numMines)
+        self.m_board.printBoard()
         self.firstMove = True
         self.m_userID = userID
         return
@@ -24,6 +25,7 @@ class Executive:
         '''returns false is user loses game
             returns true if user made a valid move
         '''
+        self.m_board.printBoard()
         # if this is user's first move, still need to set mines
         if self.firstMove is True:
             self.m_board.firstStep(row, col)
@@ -31,6 +33,7 @@ class Executive:
         else:
             if self.m_board.selectSpace(row, col) is True:
                 return (False)
+            self.m_board.printBoard()
         return
 
     def rightClick(self, row, col):

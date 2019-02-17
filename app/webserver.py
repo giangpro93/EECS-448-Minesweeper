@@ -4,12 +4,13 @@ import requests
 import json
 from Executive import Executive
 
-app = Flask(__name__)
 
 #hold lists of user games
 games = []
-#hold current userID (increments by 1)
-m_userID = 80046264357
+
+
+app = Flask(__name__)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
@@ -29,34 +30,34 @@ def main():
         return render_template('index.html')
 
 @app.route('/api/createBoard', methods=['POST'])
-def api_newboard(self):
+def api_newboard():
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string)
     rows = (int)(d['rows'])
     cols = (int)(d['cols'])
     mines = (int)(d['mines'])
-
+    userID = (int)(d['userID'])
     #add new game to list of games
-    newGame = Executive(rows, cols, mines, self.m_userID)
+    newGame = Executive(rows, cols, mines, userID)
     games.append(newGame)
-    #increment userID by 1
-    self.m_userID += 1
+    print(games[0].getUserID())
     # POST with JSON 
     return str(True)
 
 @app.route('/api/selectSpace', methods=['POST'])
-def api_selectSpace(self):
+def api_selectSpace():
     s = request.form.to_dict()['json_string']
     # POST with JSON
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string)
-    rows = (d['rows'])
-    cols = (d['cols'])
-    rightClick = (d['rightClick'])
+    rows = (int)(d['rows'])
+    cols = (int)(d['cols'])
+    userID = (int)(d['userID'])
+    rightClick = (bool)(d['rightClick'])
 
-    for i in self.games:
-        if (games[i].getUserID() == '''passed in userID'''):
+    for i in games:
+        if (games[i].getUserID() == userID):
             #call either right or left click method
             if rightClick is True:
                 result = games[i].rightClick(rows, cols)
@@ -69,12 +70,12 @@ def api_selectSpace(self):
                     #Flag successfully planted
                     return str(games[i].getJson)
                 elif result == 1:
-                    #user has won - END GAME                
+                    print("win")#user has won - END GAME                
             else:
                 result = games[i].leftClick(rows, cols)
                 if result is False:
-                    #user has lost - END GAME
-                else
+                    print("lose") #user has lost - END GAME
+                else:
                     return str(games[i].getJson)
 
     
