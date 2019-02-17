@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, Response
 import os.path
 import requests
+import json
 
 app = Flask(__name__)
 
@@ -22,14 +23,19 @@ def main():
     if request.method == 'GET':
         return render_template('index.html')
 
-@app.route('/api/newboard', methods=['POST'])
+@app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
-    print(request.form.to_dict())
-    return "newboard"
+    print(request.form.to_dict()['json_string'])
+    # POST with JSON 
+    return str(True)
 
-@app.route('/api/save', methods=['POST'])
-def api_save():
-    return "save"
+@app.route('/api/selectSpace', methods=['GET', 'POST'])
+def api_selectSpace():
+    print(request.form.to_dict()['json_string'])
+    # POST with JSON 
+    payload = [[1,2,3],[1,2,3],[-1,-1,-1]]
+    r = json.dumps(payload)
+    return str(r)
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()

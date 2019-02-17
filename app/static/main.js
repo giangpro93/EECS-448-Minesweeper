@@ -1,9 +1,10 @@
 $board = $('#board');
-const url='our_url';
+
 var cols = null;
 var rows = null;
 
 function onSubmit(){
+  const url='api/createBoard';
   //get user input
   rows = document.getElementById("num_rows").value;
   cols = document.getElementById("num_cols").value;
@@ -52,7 +53,7 @@ $board.bind('contextmenu', function(e){
 });
 
 $board.on('click', '.col.hidden', function(e){
-
+    const url = 'api/selectSpace'
     //get index on grid of click location
     const $block = $(this);
     const rowVal = $block.data('row');
@@ -67,45 +68,40 @@ $board.on('click', '.col.hidden', function(e){
     }
 
     //send row and col value in a string with JSON to url
-    $.post(url, {
+    let data = $.post(url, {
       json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false"})
     });
+    data = data
+    if(data == "gameOver"){
+      gameOver();
+    }
+    else{
+      var countRow = 0;
+      var countCol = 0;
 
-    //receive new row and col values to change board
-    $.get(url, function(data){
+      for(i in data){
 
-      if(data == "gameOver"){
-        gameOver();
-      }
-      else{
-        var countRow = 0;
-        var countCol = 0;
-
-        for(i in data){
-
-          if(i > cols){
-            countCol=0;
-            countRow++;
-          }
-
-          let curSpace = $('.col.hidden[data-row=${countRow}][data-col=${countCol}]');
-
-          if(data[i] == '0'){
-            clearSpace(curSpace);
-          }
-          else if(data[i] == 'f'){
-            flagSpace(curSpace);
-          }
-          else{
-            var numAdjacent = data[i];
-            $('<div class=divText>' + numAdjacent + '</div>').appendTo(curSpace);
-          }
-
-          counCol++;
-
+        if(i > cols){
+          countCol=0;
+          countRow++;
         }
 
-      }
-    })
+        let curSpace = $('.col.hidden[data-row=${countRow}][data-col=${countCol}]');
 
+        if(data[i] == '0'){
+          clearSpace(curSpace);
+        }
+        else if(data[i] == 'f'){
+          flagSpace(curSpace);
+        }
+        else{
+          var numAdjacent = data[i];
+          $('<div class=divText>' + numAdjacent + '</div>').appendTo(curSpace);
+        }
+
+        counCol++;
+
+      }
+
+    }
 })
