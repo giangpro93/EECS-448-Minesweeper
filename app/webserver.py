@@ -8,6 +8,20 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
+    """Fetches rows from a Bigtable.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by big_table.  Silly things may happen if
+    other_silly_variable is not None.
+
+    Args:
+        None
+    Returns:
+        The HTML filess
+
+    Raises:
+        Nones
+    """
     if request.method == 'POST':
         return handle_request(request.form)
     if request.method == 'GET':
@@ -15,7 +29,7 @@ def main():
 
 
 def handle_request(request_data):
-    body = request_data['Body'].strip()
+    # body = request_data['Body'].strip()
     return "test"
 
 
