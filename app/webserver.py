@@ -70,11 +70,11 @@ def api_selectSpace():
                     #Flag successfully planted
                     return str(games[i].getJson)
                 elif result == 1:
-                    print("win")#user has won - END GAME                
+                    return "WINNER"                
             else:
                 result = games[i].leftClick(rows, cols)
                 if result is False:
-                    print("lose") #user has lost - END GAME
+                    return "LOSER"
                 else:
                     return str(games[i].getJson)
 
