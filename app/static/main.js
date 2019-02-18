@@ -48,7 +48,7 @@ function clearSpace(){
 }
 
 $board.on('contextmenu', '.col.hidden',function(e){
-      const url = 'api/toggleFlag';
+      const url = 'api/selectSpace';
       //disable context menu if right-click on board and post data
       const $block = $(this);
       const rowVal = $block.data('row');
@@ -72,7 +72,7 @@ $board.on('click', '.col.hidden', function(e){
     const colVal = $block.data('col');
 
     //send row and col value in a string with JSON to url
-    let data3;
+    let data3 = 1;
     let xhr3;
     let response;
     $.ajax({
@@ -81,10 +81,10 @@ $board.on('click', '.col.hidden', function(e){
       data: {
         json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
       },
-      success: function(data){ response = jQuery.parseJSON(data);},
+      success: function(response){console.log(response)},
       dataType: 'text'
     });
-    
+
     let data = data3 
     if(data == "gameOver"){
       gameOver();
