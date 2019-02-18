@@ -140,7 +140,7 @@ The late swap to Python and Flask threw everyone into a panic. It would have bee
 We do not show the full state of the board upon losing the game. This would be the next functionality that we would add. There is currently a function in BoardSpace that returns either a number or a b (for mine).
 
 # Summary
-All in all we are happy with the finished product we will be presenting. At t-minus 2 hours til the due date, we are playing games full games of minesweeper.
+All in all we are happy with the finished product we will be presenting. At t-minus 2 hours til the due date, we are playing full games of minesweeper.
 
 
 
