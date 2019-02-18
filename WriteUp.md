@@ -31,9 +31,9 @@ Location: Spahr Library
     * bools gameOver, wonGame
 
 
-# Meeting #2 - 4:00 - 5:30
+## Meeting #2 2/12/2019- 4:00 - 5:30
 
-Attendees: Andre, Nathan, Colin, Michael
+Attendees: Andre, Nathan, Colin, Michael, Tiernon
 
 Location: Spahr Library Floor 2
 
@@ -44,7 +44,7 @@ Resolved lab time issue
 
 
 
-## Meeting #3 - 1:00 - 2:45
+## Meeting #3 - 2/13/2019 1:00 - 2:45
 
 Attendees: Michael, Nathan
 
@@ -53,7 +53,7 @@ Location: Jayhawker Towers
 ### Accomplishments 
 Generated rails server Successfully got aspects of MVC to work
 
-## Meeting #4 - 2:21 - 4:00
+## Meeting #4 - 2/16/2019 2:20 - 4:00
 
 Attendees: Tiernon, Michael, Nathan, Colin
 
@@ -63,7 +63,7 @@ Location: Legends Apartments
 Decided to abandon ruby on rails and use python backend
 Convert ruby files to python
 
-## Meeting #5 - 10:00 - 1:00
+## Meeting #5 - 2/17/2019 10:00 - 1:00
 
 Attendees: Tiernon, Michael, Nathan, Andre
 
