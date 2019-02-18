@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, Response
-from Executive import Executive
 import os.path
 import requests
 import json
+from Executive import Executive
 
-app = Flask(__name__)
 
 #hold lists of user games
 games = []
-#hold current userID (increments by 1)
-userID = 80046264357
+
+
+app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -29,34 +29,53 @@ def main():
     if request.method == 'GET':
         return render_template('index.html')
 
-
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
-    print(request.form.to_dict()['json_string'])
-
+    s = request.form.to_dict()['json_string']
+    json_acceptable_string = s.replace("'", "\"")
+    d = json.loads(json_acceptable_string)
+    rows = (int)(d['rows'])
+    cols = (int)(d['cols'])
+    mines = (int)(d['mines'])
+    userID = (int)(d['userID'])
     #add new game to list of games
-    newGame = Executive('''rows, cols, numMines''', userID)
+    newGame = Executive(rows, cols, mines, userID)
     games.append(newGame)
-    #increment userID by 1
-    userID += 1
-
-    # POST with JSON
+    print(games[0].getUserID())
+    # POST with JSON 
     return str(True)
 
-
-@app.route('/api/selectSpace', methods=['GET', 'POST'])
-def api_selectSpace(self):
-    print(request.form.to_dict()['json_string'])
+@app.route('/api/selectSpace', methods=['POST'])
+def api_selectSpace():
+    s = request.form.to_dict()['json_string']
     # POST with JSON
-    payload = [[1, 2, 3], [1, 2, 3], [-1, -1, -1]]
-    r = json.dumps(payload)
-
-    for i in self.games:
-        if (games[i].getUserID() == '''passed in userID'''):
+    json_acceptable_string = s.replace("'", "\"")
+    d = json.loads(json_acceptable_string)
+    rows = (int)(d['rows'])
+    cols = (int)(d['cols'])
+    userID = (int)(d['userID'])
+    rightClick = (d['rightClick'] == "true")
+    for i in games:
+        if (i.getUserID() == userID):
             #call either right or left click method
-            print(i)
+            if rightClick is True:
+                result = i.rightClick(rows, cols)
 
-    return str(r)
+                #handle different cases on right click
+                if result == -1:
+                    #user out of flags
+                    return str(i.getJson())
+                elif result == 0:
+                    #Flag successfully planted
+                    return str(i.getJson())
+                elif result == 1:
+                    return "WINNER"                
+            else:
+                result = i.leftClick(rows, cols)
+                if result is False:
+                    return "LOSER"
+                else:
+                    return str(i.getJson())
 
 
 def handle_request(request_data):
@@ -65,4 +84,4 @@ def handle_request(request_data):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3001)
+    app.run(host='0.0.0.0', port=3001, debug=True)
