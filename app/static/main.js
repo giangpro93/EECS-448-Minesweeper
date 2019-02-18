@@ -67,6 +67,7 @@ function gameOver(isWon){
         alert('Allow popups for Minesweeper');
       }
   }
+  window.location.reload();
 }
 
 $board.on('contextmenu', '.col.hidden',function(e){
