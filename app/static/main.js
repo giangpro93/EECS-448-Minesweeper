@@ -42,12 +42,13 @@ function createBoard(r, c){
 function gameOver(){
   //reveal all bombs, bring user to welcome page
 }
-
 $board.bind('contextmenu', function(e){
-      const url = 'api/toggleFlag';
+      const url = 'api/selectSpace';
       //disable context menu if right-click on board and post data
-      const rowVal = $(this).data('row');
-      const colVal = $(this).data('col');
+      const $block = $(this);
+      const rowVal = $block.data('row');
+      const colVal = $block.data('col');
+  
       if(e.which == 3){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
@@ -69,15 +70,24 @@ $board.on('click', '.col.hidden', function(e){
       const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
       $('<div class=divText>' + '<|' + '</div>').appendTo($thisSpace);
       $.post(url, {
-        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
+        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
       });
+    }
+    else if(e.which == 1) {
+      console.log("Right click")
+    }
+    else {
+      console.log("idk man")
     }
 
     //send row and col value in a string with JSON to url
-    let data=$.post(url, {
+    let data3;
+    let xhr3;
+    let response;
+    $.post(url, {
       json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
-    });
-    data = data
+    }, function(data) { response = jQuery.parseJSON(data);}, 'json');
+    let data = data3 
     if(data == "gameOver"){
       gameOver();
     }
