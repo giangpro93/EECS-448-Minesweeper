@@ -55,7 +55,7 @@ class Executive:
         else:
             if self.m_board.selectSpace(row, col) is True:
                 return (False)
-            self.m_board.printBoard()
+ 
         return
 
     def rightClick(self, row, col):
