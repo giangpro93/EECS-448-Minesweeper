@@ -50,10 +50,10 @@ function createBoard(r, c){
 
 function gameOver(isWon){
   if(isWon){
-    window.location.replace("winner.info");
+    window.location.replace("https://winner.info/");
   }
   else{
-    window.location.replace("losers.org");
+    window.location.replace("http://www.losers.org/");
   }
 }
 
@@ -67,7 +67,7 @@ $board.on('contextmenu', '.col.hidden',function(e){
       if(e.which == 3){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
-        $('<p><|</p>').appendTo($thisSpace);
+        //$('<p><|</p>').appendTo($thisSpace);
         $.ajax({
           type: "POST",
           url: url,
@@ -153,7 +153,7 @@ $board.on('click', '.col.hidden', function(e){
           for(let j = 0; j < cols; j++){
             const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
             if(data[i*cols+j] == '_'){
-              $col.css("background-color", "white");
+              //nothing
             }
             else if(data[i*cols+j] == 'f'){
               $('<p><|</p>').appendTo($col);
@@ -161,6 +161,7 @@ $board.on('click', '.col.hidden', function(e){
             else{
               var numAdjacent = data[i*cols+j];
               $('<p>' + numAdjacent + '</p>').appendTo($col)
+              $col.css("background-color", "white");
             }
             $row.append($col);
           }
