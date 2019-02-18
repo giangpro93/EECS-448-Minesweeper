@@ -102,18 +102,18 @@ class Board:
     # toggleFlag Space if valid
     def toggleFlagSpace(self, row, col):
         # check if we can flag the space
-        if not self.m_board[row][col].isFlagged() and self.m_numFlags > 0:
-            self.m_board[row][col].toggleFlag()
+        if not self.m_board[row][col].isFlagged and self.m_numFlags > 0:
+            self.m_board[row][col].isFlagged = True
             self.m_numFlags -= 1
             # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isThisAMine():
+            if self.m_board[row][col].isMine:
                 self.m_numMinesFlagged += 1
         # check if space is already flagged, then remove
-        elif self.m_board[row][col].isFlagged():
-            self.m_board[row][col].toggleFlag()
+        elif self.m_board[row][col].isFlagged:
+            self.m_board[row][col].isFlagged = False
             self.m_numFlags += 1
             # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isThisAMine():
+            if self.m_board[row][col].isMine:
                 self.m_numMinesFlagged -= 1
 
         # throw an exception if you're out of flags
