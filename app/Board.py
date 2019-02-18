@@ -125,6 +125,8 @@ class Board:
 
     def selectSpace(self, row, col):
         # if the selected space is a mine
+        if self.m_board[row][col].isFlagged:
+            return False
         if self.m_board[row][col].isMine:
             return True
         else:
