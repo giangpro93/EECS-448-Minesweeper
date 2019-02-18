@@ -7,9 +7,10 @@ Welcome to EECS 448 Minesweeper's documentation!
 ================================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 4
+    :caption: Contents:
 
+    modules
 
 Indices and tables
 ==================
@@ -21,4 +22,5 @@ Indices and tables
 Works Cited
 ===========
 
-* Yo, this ish we used
+* Sphinx
+    https://www.sphinx-doc.org/en/1.8/

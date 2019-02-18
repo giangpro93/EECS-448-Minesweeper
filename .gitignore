@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+
+
+/docs/build
+
+
+
+
+
+
+
+#########################################
+############   PYTHON       #############
+#########################################
+=======
+.DS_Store
+>>>>>>> webserver
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
