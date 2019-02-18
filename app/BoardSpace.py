@@ -1,7 +1,7 @@
 class BoardSpace:
     """
-BoardSpace class goes in each spot on the game board, enabling tracking of
-mine location, flags, # of spots near, etc.
+    BoardSpace class goes in each spot on the game board, enabling tracking of
+    mine location, flags, # of spots near, etc.
     """
     isMine = False
     isFlagged = False

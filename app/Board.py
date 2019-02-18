@@ -4,6 +4,10 @@ import json
 
 
 class Board:
+    """
+        Board class contains the 2D array of BoardSpaces to hold game info
+        Handles all things related to the game and is called by executive
+    """
 
     # initializes the board
     def __init__(self, rows, cols, mines):

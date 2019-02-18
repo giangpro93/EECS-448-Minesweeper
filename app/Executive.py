@@ -3,6 +3,9 @@ import json
 
 
 class Executive:
+    """
+        Runs the game by calling Board methods
+    """
 
     #Define member variables
     m_board = Board(5, 5, 2)
