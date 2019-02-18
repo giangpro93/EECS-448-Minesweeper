@@ -67,7 +67,7 @@ class Board:
         collision = 0
         for i in range(0, self.m_rows):
             for j in range(0, self.m_cols):
-                if i == ypos and j == xpos:
+                if i == xpos and j == ypos:
                     collision = 1
                 elif (mineIndex[j+(i*self.m_cols)-collision]):
                     self.m_board[i][j].isMine = True
@@ -125,6 +125,8 @@ class Board:
 
     def selectSpace(self, row, col):
         # if the selected space is a mine
+        if self.m_board[row][col].isFlagged:
+            return False
         if self.m_board[row][col].isMine:
             return True
         else:
