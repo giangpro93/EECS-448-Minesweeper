@@ -31,7 +31,7 @@ Location: Spahr Library
     * bools gameOver, wonGame
 
 
-#Meeting #2 - 4:00 - 5:30
+# Meeting #2 - 4:00 - 5:30
 
 Attendees: Andre, Nathan, Colin, Michael
 
@@ -44,32 +44,32 @@ Resolved lab time issue
 
 
 
-##Meeting #3 - 1:00 - 2:45
+## Meeting #3 - 1:00 - 2:45
 
 Attendees: Michael, Nathan
 
 Location: Jayhawker Towers
 
-###Accomplishments 
+### Accomplishments 
 Generated rails server Successfully got aspects of MVC to work
 
-##Meeting #4 - 2:21 - 4:00
+## Meeting #4 - 2:21 - 4:00
 
 Attendees: Tiernon, Michael, Nathan, Colin
 
 Location: Legends Apartments
 
-###Accomplishments 
+### Accomplishments 
 Decided to abandon ruby on rails and use python backend
 Convert ruby files to python
 
-##Meeting #5 - 10:00 - 1:00
+## Meeting #5 - 10:00 - 1:00
 
 Attendees: Tiernon, Michael, Nathan, Andre
 
 Locations: Legends Apartments
 
-###Accomplishments
+### Accomplishments
 Rewrite executive class in python to function w/ JS
 Transfer data via JSON
 
@@ -92,3 +92,31 @@ Colin was involved with the algorithms for placing bombs and taking the first st
 
 ## Tiernon
 Tiernon built and designed a majority of the frontend. Originally embedded ruby files for use with rails, he had to pivot to building them entirely out of js/html/css once we switched technologies. He also worked extensively on updating the board once the backend changed the state of the game. 
+
+
+
+
+# Challenges
+
+## Ruby on Rail
+Well, it turns out two weeks is not long enough for us to learn a new programming language and web framework, and produce a MVP capable of playing minesweeper. Tragic. None of us had experience with any sort of system that revolved around Model/View/Controller (most of us had never heard of MVC before). After a week and 5 days of toiling in Rails, we gave up on Ruby on Rails for technologies we were more familiar with. 
+
+## Time Crunch
+Saturday night we decided to use python. So it was all hands on deck for the last day or so of our project. And we're not one for pygame , so we decided to change our embedded ruby html files to normal html files and build a backend using flask. The biggest challenge on this aspect was the time crunch because most of us were familiar with flask, python, and html/css/js.
+
+## HackKU
+We spent our entire last weekend participating in/winning HackKU. This took up around 48 hours of prime coding time that could have been spent building a Ruby on Rails minesweeper. But hey, three of our five teammembers won shiny new VR goggles. 
+
+## Nathan and GitHub
+GitHub is tricky for our friend Nathan. He couldn't figure out how to get listed as a contributer. And even then, he somehow managed to commit under three different names. (Nichols Basement, Nathan Nichols, and natenichols).
+
+## Development
+Getting the front and back end to communicate using JSON has proven to be difficult.
+
+ 
+
+
+
+
+
+
