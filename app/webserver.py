@@ -63,7 +63,7 @@ def api_selectSpace():
             Post: 
                 game takes a step
             Args: 
-                rows, cols, userID, rightClick (bool)
+                int rows, int cols, int userID, bool rightClick
             Returns: 
                 "Winner" if user has won, "Loser" if user has lost, or board in json if game continues
         """

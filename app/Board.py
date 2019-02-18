@@ -14,7 +14,7 @@ class Board:
             Post: 
                 Initializes member variables based on user input 
             Args: 
-                numRows, numCols, numMines
+                int numRows, int numCols, int numMines
             Returns: 
                 No return
         """
@@ -96,7 +96,7 @@ class Board:
             Post: 
                 mines set and nearby spaces calculated
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 No return
         """
@@ -113,7 +113,7 @@ class Board:
             Post: 
                 mines set randomly around map
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 none
         """
@@ -170,7 +170,7 @@ class Board:
             Post: 
                 individual boardspace knows how many mines surround it
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 integer representing nearby mine count
         """
@@ -190,7 +190,7 @@ class Board:
             Post: 
                 Boardspaces are unhidden until there are nearby mines
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 No return
         """
@@ -214,7 +214,7 @@ class Board:
             Post: 
                 Boardspace flag toggled on/off
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 No return
             Raise: 
@@ -249,7 +249,7 @@ class Board:
             Post: 
                 Either loses game (mine hit) or unhides selected boardspace
             Args: 
-                xpos (row), ypos (column)
+                int xpos (row), int ypos (column)
             Returns: 
                 True if mine is hit, else False
         """

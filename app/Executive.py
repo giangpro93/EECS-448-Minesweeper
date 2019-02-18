@@ -4,13 +4,26 @@ import json
 
 class Executive:
 
-    '''Define member variables'''
+    #Define member variables
     m_board = Board(5, 5, 2)
     firstMove = True
     m_userID = 0
 
     def __init__(self, rows, cols, numMines, userID):
-        if rows < 2 or cols < 2:
+        """
+            Initialize Executive
+            Pre: 
+                none
+            Post: 
+                member variables set to user specified values
+            Args: 
+                int rows, int cols, int numMines, int userID
+            Returns: 
+                none
+            Raise:
+                RuntimeError if board size is invalid or if invalid number of mines
+        """
+        if rows < 2 or cols < 2 or rows > 30 or cols > 30:
             raise RuntimeError('Invalid board size')
         if numMines < 1 or numMines > rows * cols - 1:
             raise RuntimeError('Invalid number of mines')
@@ -22,9 +35,17 @@ class Executive:
         return
 
     def leftClick(self, row, col):
-        '''returns false is user loses game
-            returns true if user made a valid move
-        '''
+        """
+            Handles left click event - clicking on a new space
+            Pre: 
+                valid input for row and col
+            Post: 
+                Modifies board to unhide selected spot (and related)
+            Args: 
+                int row, int col
+            Returns: 
+                returns false is user loses game
+        """
         self.m_board.printBoard()
         # if this is user's first move, still need to set mines
         if self.firstMove is True:
@@ -37,10 +58,19 @@ class Executive:
         return
 
     def rightClick(self, row, col):
-        '''returns -1 if user is out of flags
-            returns 0 if flag was successfully planted
-            returns 1 if user wins (all mines flagged)
-        '''
+        """
+            Handles right click event - toggling flag
+            Pre: 
+                valid row and col input
+            Post: 
+                toggles flag and determines if user has won
+            Args: 
+                int rows, int cols
+            Returns: 
+                returns -1 if user is out of flags
+                returns 0 if flag was successfully planted
+                returns 1 if user wins (all mines flagged)
+        """       
         try:
             self.m_board.toggleFlagSpace(row, col)
         except:
@@ -53,7 +83,29 @@ class Executive:
             return 0
 
     def getUserID(self):
+        """
+            Gets userID for Executive instance
+            Pre: 
+                none
+            Post: 
+                none
+            Args: 
+                none
+            Returns: 
+                int userID
+        """
         return self.m_userID
 
     def getJson(self):
+        """
+            Pass through json
+            Pre: 
+                none
+            Post: 
+                none
+            Args: 
+                none
+            Returns: 
+                returns json file from board
+        """
         return self.m_board.boardToJson()
