@@ -124,13 +124,6 @@ class Board:
 
         # initializes a 1D array to randomly place bombs in indicies
         maxIndex = self.m_cols * self.m_rows
-        if (ypos == 0 or ypos == self.m_rows - 1):
-            maxIndex -= 3
-            if (xpos == 0 or xpos == self.m_cols - 1):
-                maxIndex -= 2
-        else:
-            if (xpos == 0 or xpos == self.m_cols - 1):
-                maxIndex -= 3
         mineIndex = [False] * (maxIndex-1)
 
         # initializes a certian number of mines
@@ -144,8 +137,8 @@ class Board:
         collision = 0
         for i in range(0, self.m_rows):
             for j in range(0, self.m_cols):
-                if abs(i-ypos) <= 1 and abs(j-xpos) <= 1:
-                    collision += 1
+                if i == xpos and j == ypos:
+                    collision = 1
                 elif (mineIndex[j+(i*self.m_cols)-collision]):
                     self.m_board[i][j].isMine = True
 
@@ -179,8 +172,8 @@ class Board:
                 integer representing nearby mine count
         """
         count = 0
-        for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_cols)):
-            for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_rows)):
+        for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_rows)):
+            for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_cols)):
                 if ((x != xpos or y != ypos) and self.m_board[x][y].isMine):
                     count += 1
 
@@ -200,8 +193,8 @@ class Board:
         """
         if self.m_board[xpos][ypos].numMines == 0 and self.m_board[xpos][ypos].isHidden:
             self.m_board[xpos][ypos].isHidden = False
-            for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_cols)):
-                for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_rows)):
+            for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_rows)):
+                for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_cols)):
                     if x != xpos or y != ypos:
                         self.recUnhide(x, y)
         self.m_board[xpos][ypos].isHidden = False
@@ -225,18 +218,18 @@ class Board:
                 RuntimeError if no flags remain
         """
         # check if we can flag the space
-        if not self.m_board[row][col].isFlagged() and self.m_numFlags > 0:
-            self.m_board[row][col].toggleFlag()
+        if not self.m_board[row][col].isFlagged and self.m_numFlags > 0:
+            self.m_board[row][col].isFlagged = True
             self.m_numFlags -= 1
             # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isThisAMine():
+            if self.m_board[row][col].isMine:
                 self.m_numMinesFlagged += 1
         # check if space is already flagged, then remove
-        elif self.m_board[row][col].isFlagged():
-            self.m_board[row][col].toggleFlag()
+        elif self.m_board[row][col].isFlagged:
+            self.m_board[row][col].isFlagged = False
             self.m_numFlags += 1
             # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isThisAMine():
+            if self.m_board[row][col].isMine:
                 self.m_numMinesFlagged -= 1
 
         # throw an exception if you're out of flags
@@ -258,6 +251,8 @@ class Board:
                 True if mine is hit, else False
         """
         # if the selected space is a mine
+        if self.m_board[row][col].isFlagged:
+            return False
         if self.m_board[row][col].isMine:
             return True
         else:
