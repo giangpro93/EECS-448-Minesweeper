@@ -40,10 +40,15 @@ function createBoard(r, c){
 }
 
 function gameOver(){
-  //reveal all bombs, bring user to welcome page
+  //redirect to page
 }
-$board.on('contextmenu', '.col.hidden', function(e){
-      const url = 'api/selectSpace';
+
+function clearSpace(){
+  //clear the space
+}
+
+$board.on('contextmenu', '.col.hidden',function(e){
+      const url = 'api/toggleFlag';
       //disable context menu if right-click on board and post data
       const $block = $(this);
       const rowVal = $block.data('row');
@@ -52,7 +57,7 @@ $board.on('contextmenu', '.col.hidden', function(e){
       if(e.which == 3){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
-        $('<p class=divText>' + '<|' + '</p>').appendTo($thisSpace);
+        $('<p><|</p>').appendTo($thisSpace);
         $.post(url, {
           json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
         });
@@ -65,20 +70,6 @@ $board.on('click', '.col.hidden', function(e){
     const $block = $(this);
     const rowVal = $block.data('row');
     const colVal = $block.data('col');
-
-    if(e.which == 3 ){
-      const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
-      $('<div class=divText>' + '<|' + '</div>').appendTo($thisSpace);
-      $.post(url, {
-        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
-      });
-    }
-    else if(e.which == 1) {
-      console.log("Right click")
-    }
-    else {
-      console.log("idk man")
-    }
 
     //send row and col value in a string with JSON to url
     let data3;
@@ -119,7 +110,7 @@ $board.on('click', '.col.hidden', function(e){
         }
         else{
           var numAdjacent = data[i];
-          $curSpace[0].innerHTML = numAdjacent
+          $('<p>' + numAdjacent + '</p>').appendTo($thisSpace)
         }
 
         countCol++;
