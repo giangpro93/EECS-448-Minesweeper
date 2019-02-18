@@ -2,6 +2,7 @@
 
 ## How to run
 
+
 ### Requirements
 
 Have python3 installed
@@ -18,8 +19,17 @@ Run python3 webserver.py
 Allow popups your web browser of choice
 
 
-Navigate to localhost:3001 on said web browser
+Navigate to site listed on terminal (Ex: localhost:3001)
 
 
 Play Minesweeper
 
+Alternatively, visit  34.73.44.45 on your web browser
+
+# Documentation
+
+With sphinx installed from the docs directery, run:
+    make html
+to build the html files.
+
+These can then be viewed from the build directory.
