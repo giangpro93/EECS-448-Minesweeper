@@ -48,7 +48,11 @@ def api_newboard():
     mines = (int)(d['mines'])
     userID = (int)(d['userID'])
     #add new game to list of games
-    newGame = Executive(rows, cols, mines, userID)
+    try:
+        newGame = Executive(rows, cols, mines, userID)
+    except:
+        return "INVALID_USER_INPUT"
+        
     games.append(newGame)
     print(games[0].getUserID())
     # POST with JSON 
