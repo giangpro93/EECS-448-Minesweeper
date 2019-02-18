@@ -10,7 +10,16 @@ function onSubmit(){
   rows = document.getElementById("num_rows").value;
   cols = document.getElementById("num_cols").value;
   const mines = document.getElementById('num_mines').value;
+
+  if(rows < 2 || cols < 2){
+    if(!alert('Poor size values!')){window.location.reload();}
+  }
+  if(mines >= (rows*cols) || mines == 0){
+    if(!alert('Poor mine number value!')){window.location.reload();}
+  }
+
   userID = createUniqueID();
+
   $.post(url, {
     json_string: JSON.stringify({rows: rows, cols: cols, mines: mines, userID: userID})
   });
@@ -59,10 +68,53 @@ $board.on('contextmenu', '.col.hidden',function(e){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
         $('<p><|</p>').appendTo($thisSpace);
-        $.post(url, {
-          json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+            json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
+          },
+          success: function(response){
+            data = response;
+          },
+          dataType: 'text'
+        }).done(function() {
+          if (data == "WINNER"){
+            gameOver(true);
+          }
+          else if (data == "LOSER") {
+            gameOver(false);
+          }
+          else{
+            $board.empty();
+            data = eval("data = " + data);
+            var countRow = 0;
+            var countCol = 0;
+            for(let i =0; i < rows; i++){
+              const $row = $('<div>').addClass('row');
+              for(let j = 0; j < cols; j++){
+                const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
+                if(data[i*cols+j] == '_'){
+                  $col.css("background-color", "white");
+                }
+                else if(data[i*cols+j] == 'f'){
+                  $('<p><|</p>').appendTo($col);
+                }
+                else{
+                  var numAdjacent = data[i*cols+j];
+                  $('<p>' + numAdjacent + '</p>').appendTo($col)
+                }
+                $row.append($col);
+              }
+              $board.append($row);
+            }
+
+
+          }
         });
       }
+
+
 });
 
 $board.on('click', '.col.hidden', function(e){
@@ -114,7 +166,7 @@ $board.on('click', '.col.hidden', function(e){
           }
           $board.append($row);
         }
-    
+
 
       }
     });
