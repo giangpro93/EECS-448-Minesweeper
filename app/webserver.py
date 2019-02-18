@@ -54,8 +54,8 @@ def api_selectSpace():
     rows = (int)(d['rows'])
     cols = (int)(d['cols'])
     userID = (int)(d['userID'])
-    rightClick = (bool)(d['rightClick'])
-
+    rightClick = (d['rightClick'] == "true")
+    print(rightClick)
     for i in games:
         if (i.getUserID() == userID):
             #call either right or left click method
@@ -74,7 +74,7 @@ def api_selectSpace():
             else:
                 result = i.leftClick(rows, cols)
                 if result is False:
-                    return "LOSER"
+                    print("LOSER")
                 else:
                     return str(i.getJson)
 
