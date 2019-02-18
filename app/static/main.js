@@ -95,7 +95,7 @@ $board.on('contextmenu', '.col.hidden',function(e){
               for(let j = 0; j < cols; j++){
                 const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
                 if(data[i*cols+j] == '_'){
-                  $col.css("background-color", "white");
+                  $col.css("background-color", "grey");
                 }
                 else if(data[i*cols+j] == 'f'){
                   $('<p><|</p>').appendTo($col);
@@ -103,6 +103,7 @@ $board.on('contextmenu', '.col.hidden',function(e){
                 else{
                   var numAdjacent = data[i*cols+j];
                   $('<p>' + numAdjacent + '</p>').appendTo($col)
+                  $col.css("background-color", "white");
                 }
                 $row.append($col);
               }
