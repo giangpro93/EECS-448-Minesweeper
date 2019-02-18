@@ -50,11 +50,24 @@ function createBoard(r, c){
 
 function gameOver(isWon){
   if(isWon){
-    window.location.replace("https://winner.info/");
+        var win = window.open('https://winner.info/');
+        if (win) {
+          win.focus();
+        }
+        else {
+          alert('Allow popups for Minesweeper');
+        }
   }
   else{
-    window.location.replace("http://www.losers.org/");
+      var win = window.open('http://www.losers.org/');
+      if (win) {
+        win.focus();
+      }
+      else {
+        alert('Allow popups for Minesweeper');
+      }
   }
+  window.location.reload();
 }
 
 $board.on('contextmenu', '.col.hidden',function(e){
