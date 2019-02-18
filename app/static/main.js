@@ -32,7 +32,7 @@ function createBoard(r, c){
   for(let i =0; i < r; i++){
     const $row = $('<div>').addClass('row');
     for(let j = 0; j < c; j++){
-      const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
+      const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j).attr('data-flag', 0);
       $row.append($col);
     }
     $board.append($row);
@@ -55,7 +55,19 @@ $board.on('contextmenu', '.col.hidden',function(e){
       if(e.which == 3){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
-        $('<p><|</p>').appendTo($thisSpace);
+        if($(this).data('flag') == 0){
+          console.log($(this).data('flag'));
+          $('<p id = "flag"><|</p>').appendTo($thisSpace);
+          $(this).attr('data-flag', function(i, origValue){
+            return 1;
+          });
+        }
+        else if($(this).data('flag') == 1){
+          $(this).empty();
+          $(this).attr('data-flag', function(i, origValue){
+            return 0;
+          });
+        }
         $.post(url, {
           json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
         });
