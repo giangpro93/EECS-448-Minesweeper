@@ -39,12 +39,13 @@ function createBoard(r, c){
   }
 }
 
-function gameOver(){
-  //redirect to page
-}
-
-function clearSpace(){
-  //clear the space
+function gameOver(isWon){
+  if(isWon){
+    window.location.replace("winner.info");
+  }
+  else{
+    window.location.replace("losers.org");
+  }
 }
 
 $board.on('contextmenu', '.col.hidden',function(e){
@@ -53,7 +54,7 @@ $board.on('contextmenu', '.col.hidden',function(e){
       const $block = $(this);
       const rowVal = $block.data('row');
       const colVal = $block.data('col');
-  
+
       if(e.which == 3){
         e.preventDefault();
         const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
@@ -84,41 +85,38 @@ $board.on('click', '.col.hidden', function(e){
       dataType: 'text'
     }).done(function() {
       if (data == "WINNER"){
-        gameOver();
+        gameOver(true);
       }
       else if (data == "LOSER") {
-        gameOver();
+        gameOver(false);
       }
       else{
+
+        $board.empty();
         data = eval("data = " + data);
         var countRow = 0;
         var countCol = 0;
-  
-        for(i in data){
-  
-          if(i > cols){
-            countCol=0;
-            countRow++;
+        for(let i =0; i < rows; i++){
+          const $row = $('<div>').addClass('row');
+          for(let j = 0; j < cols; j++){
+            const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
+            if(data[i*cols+j] == '_'){
+              $col.css("background-color", "white");
+            }
+            else if(data[i*cols+j] == 'f'){
+              $('<p><|</p>').appendTo($col);
+            }
+            else{
+              var numAdjacent = data[i*cols+j];
+              $('<p>' + numAdjacent + '</p>').appendTo($col)
+            }
+            $row.append($col);
           }
-  
-          let $curSpace = $(`.col.hidden[data-row=${countRow}][data-col=${countCol}]`);
-  
-          if(data[i] == '0'){
-            clearSpace($curSpace);
-          }
-          else if(data[i] == 'f'){
-            flagSpace($curSpace);
-          }
-          else{
-            var numAdjacent = data[i];
-            $('<p>' + numAdjacent + '</p>').appendTo($curSpace)
-          }
-  
-          countCol++;
-  
+          $board.append($row);
         }
-  
+    
+
       }
     });
-    
+
 })
