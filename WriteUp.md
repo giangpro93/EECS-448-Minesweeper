@@ -110,6 +110,9 @@ We spent our entire last weekend participating in/winning HackKU. This took up a
 ## Nathan and GitHub
 GitHub is tricky for our friend Nathan. He couldn't figure out how to get listed as a contributer. And even then, he somehow managed to commit under three different names. (Nichols Basement, Nathan Nichols, and natenichols).
 
+## Colin and GitHub
+Colin developed on Nathan's linux machine, meaning some commits under Nathan Nichols were Colin's work.
+
 ## Development
 Getting the front and back end to communicate using JSON has proven to be difficult.
 
@@ -132,8 +135,33 @@ We were planning on using images/designs on each space to make the game more pre
 
 ## Making up our Mind
 The late swap to Python and Flask threw everyone into a panic. It would have been preferable for our team to have decided on this earlier in the week. We were making enough progress on Ruby on Rails that we were hesitant to scrap all the work we had done. 
- 
 
+## Upon Failure
+We do not show the full state of the board upon losing the game. This would be the next functionality that we would add. There is currently a function in BoardSpace that returns either a number or a b (for mine).
+
+# Summary
+All in all we are happy with the finished product we will be presenting. At t-minus 2 hours til the due date, we are playing games full games of minesweeper.
+
+
+
+## Works Cited
+### Technologies
+* Python
+	* Flask
+	* JSON library
+	* Random library
+
+* HTML/CSS/JS
+	* JQuery
+
+* (Hopefully) Google Cloud Platform
+
+
+### Sources
+* YouTube
+	*Cody Seibert Minesweeper video
+
+* Stack Overflow (obviously)
 
 
 
