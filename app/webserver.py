@@ -55,7 +55,6 @@ def api_selectSpace():
     cols = (int)(d['cols'])
     userID = (int)(d['userID'])
     rightClick = (d['rightClick'] == "true")
-    print(rightClick)
     for i in games:
         if (i.getUserID() == userID):
             #call either right or left click method
@@ -65,21 +64,18 @@ def api_selectSpace():
                 #handle different cases on right click
                 if result == -1:
                     #user out of flags
-                    return str(i.getJson)
+                    return str(i.getJson())
                 elif result == 0:
                     #Flag successfully planted
-                    return str(i.getJson)
+                    return str(i.getJson())
                 elif result == 1:
                     return "WINNER"                
             else:
                 result = i.leftClick(rows, cols)
                 if result is False:
-                    print("LOSER")
+                    return "LOSER"
                 else:
-                    return str(i.getJson)
-
-    
-
+                    return str(i.getJson())
 
 
 def handle_request(request_data):

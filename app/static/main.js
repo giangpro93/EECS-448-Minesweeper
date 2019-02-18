@@ -70,52 +70,55 @@ $board.on('click', '.col.hidden', function(e){
     const $block = $(this);
     const rowVal = $block.data('row');
     const colVal = $block.data('col');
-
+    let data;
     //send row and col value in a string with JSON to url
-    let data3 = 1;
-    let xhr3;
-    let response;
     $.ajax({
       type: "POST",
       url: url,
       data: {
         json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
       },
-      success: function(response){console.log(response)},
+      success: function(response){
+        data = response;
+      },
       dataType: 'text'
-    });
-
-    let data = data3 
-    if(data == "gameOver"){
-      gameOver();
-    }
-    else{
-      var countRow = 0;
-      var countCol = 0;
-
-      for(i in data){
-
-        if(i > cols){
-          countCol=0;
-          countRow++;
-        }
-
-        let $curSpace = $(`.col.hidden[data-row=${countRow}][data-col=${countCol}]`);
-
-        if(data[i] == '0'){
-          clearSpace($curSpace);
-        }
-        else if(data[i] == 'f'){
-          flagSpace($curSpace);
-        }
-        else{
-          var numAdjacent = data[i];
-          $('<p>' + numAdjacent + '</p>').appendTo($thisSpace)
-        }
-
-        countCol++;
-
+    }).done(function() {
+      if (data == "WINNER"){
+        gameOver();
       }
-
-    }
+      else if (data == "LOOSER") {
+        gameOver();
+      }
+      else{
+        data = eval("data = " + data);
+        var countRow = 0;
+        var countCol = 0;
+  
+        for(i in data){
+  
+          if(i > cols){
+            countCol=0;
+            countRow++;
+          }
+  
+          let $curSpace = $(`.col.hidden[data-row=${countRow}][data-col=${countCol}]`);
+  
+          if(data[i] == '0'){
+            clearSpace($curSpace);
+          }
+          else if(data[i] == 'f'){
+            flagSpace($curSpace);
+          }
+          else{
+            var numAdjacent = data[i];
+            $('<p>' + numAdjacent + '</p>').appendTo($thisSpace)
+          }
+  
+          countCol++;
+  
+        }
+  
+      }
+    });
+    
 })
