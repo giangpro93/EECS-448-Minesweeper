@@ -86,7 +86,7 @@ $board.on('click', '.col.hidden', function(e){
       if (data == "WINNER"){
         gameOver();
       }
-      else if (data == "LOOSER") {
+      else if (data == "LOSER") {
         gameOver();
       }
       else{
@@ -111,7 +111,7 @@ $board.on('click', '.col.hidden', function(e){
           }
           else{
             var numAdjacent = data[i];
-            $('<p>' + numAdjacent + '</p>').appendTo($thisSpace)
+            $('<p>' + numAdjacent + '</p>').appendTo($curSpace)
           }
   
           countCol++;
