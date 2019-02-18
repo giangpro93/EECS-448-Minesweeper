@@ -84,9 +84,16 @@ $board.on('click', '.col.hidden', function(e){
     let data3;
     let xhr3;
     let response;
-    $.post(url, {
-      json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
-    }, function(data) { response = jQuery.parseJSON(data);}, 'json');
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
+      },
+      success: function(data){ response = jQuery.parseJSON(data);},
+      dataType: 'text'
+    });
+    
     let data = data3 
     if(data == "gameOver"){
       gameOver();
