@@ -42,7 +42,7 @@ function createBoard(r, c){
 function gameOver(){
   //reveal all bombs, bring user to welcome page
 }
-$board.bind('contextmenu', function(e){
+$board.on('contextmenu', '.col.hidden', function(e){
       const url = 'api/selectSpace';
       //disable context menu if right-click on board and post data
       const $block = $(this);
