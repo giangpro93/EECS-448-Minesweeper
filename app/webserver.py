@@ -54,7 +54,6 @@ def api_newboard():
         return "INVALID_USER_INPUT"
         
     games.append(newGame)
-    print(games[0].getUserID())
     # POST with JSON 
     return str(True)
 
