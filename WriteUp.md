@@ -159,7 +159,7 @@ All in all we are happy with the finished product we will be presenting. At t-mi
 
 ### Sources
 * YouTube
-	*Cody Seibert Minesweeper video
+	* Cody Seibert Minesweeper video
 
 * Stack Overflow (obviously)
 
