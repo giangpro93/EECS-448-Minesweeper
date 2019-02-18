@@ -113,6 +113,25 @@ GitHub is tricky for our friend Nathan. He couldn't figure out how to get listed
 ## Development
 Getting the front and back end to communicate using JSON has proven to be difficult.
 
+
+
+
+# Features Left Out
+
+## Ruby on Rails
+It's on here twice. Ruby on Rails was scrapped for reasons previously mentioned.
+
+## FirstStep
+Originally we were going to remove all mines within a one space radius of the starting spot, similar to windows minesweeper. However this did not meet the criterea presented to us. So instead, mines are generated randomly except on the first space clicked, so you can have (rows*cols)-1 mines on a board. 
+
+## Appearance
+We were planning on using images/designs on each space to make the game more presentable, but that went out the window when we were short on time. The current version just uses text over spaces generated using html/css/js.
+
+
+# Changes We Would Make
+
+## Making up our Mind
+The late swap to Python and Flask threw everyone into a panic. It would have been preferable for our team to have decided on this earlier in the week. We were making enough progress on Ruby on Rails that we were hesitant to scrap all the work we had done. 
  
 
 
