@@ -153,7 +153,7 @@ $board.on('click', '.col.hidden', function(e){
           for(let j = 0; j < cols; j++){
             const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
             if(data[i*cols+j] == '_'){
-              //nothing
+              $col.css("background-color", "grey");
             }
             else if(data[i*cols+j] == 'f'){
               $('<p><|</p>').appendTo($col);
