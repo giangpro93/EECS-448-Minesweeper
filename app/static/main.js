@@ -98,37 +98,11 @@ $board.on('contextmenu', '.col.hidden',function(e){
           else if (data == "LOSER") {
             gameOver(false);
           }
-          else{
-            $board.empty();
-            data = eval("data = " + data);
-            var countRow = 0;
-            var countCol = 0;
-            for(let i =0; i < rows; i++){
-              const $row = $('<div>').addClass('row');
-              for(let j = 0; j < cols; j++){
-                const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
-                if(data[i*cols+j] == '_'){
-                  $col.css("background-color", "grey");
-                }
-                else if(data[i*cols+j] == 'f'){
-                  $('<p><|</p>').appendTo($col);
-                }
-                else{
-                  var numAdjacent = data[i*cols+j];
-                  $('<p>' + numAdjacent + '</p>').appendTo($col)
-                  $col.css("background-color", "white");
-                }
-                $row.append($col);
-              }
-              $board.append($row);
-            }
-
-
+          else {
+            renderBoard(data);
           }
         });
       }
-
-
 });
 
 $board.on('click', '.col.hidden', function(e){
@@ -157,33 +131,34 @@ $board.on('click', '.col.hidden', function(e){
         gameOver(false);
       }
       else{
-
-        $board.empty();
-        data = eval("data = " + data);
-        var countRow = 0;
-        var countCol = 0;
-        for(let i =0; i < rows; i++){
-          const $row = $('<div>').addClass('row');
-          for(let j = 0; j < cols; j++){
-            const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
-            if(data[i*cols+j] == '_'){
-              $col.css("background-color", "grey");
-            }
-            else if(data[i*cols+j] == 'f'){
-              $('<p><|</p>').appendTo($col);
-            }
-            else{
-              var numAdjacent = data[i*cols+j];
-              $('<p>' + numAdjacent + '</p>').appendTo($col)
-              $col.css("background-color", "white");
-            }
-            $row.append($col);
-          }
-          $board.append($row);
-        }
-
-
+        renderBoard(data);
       }
     });
+
+function renderBoard(data) {
+  $board.empty();
+  data = eval("data = " + data);
+  var countRow = 0;
+  var countCol = 0;
+  for (let i = 0; i < rows; i++) {
+    const $row = $('<div>').addClass('row');
+    for (let j = 0; j < cols; j++) {
+      const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
+      if (data[i * cols + j] == '_') {
+        $col.css("background-color", "grey");
+      }
+      else if (data[i * cols + j] == 'f') {
+        $('<p><|</p>').appendTo($col);
+      }
+      else {
+        var numAdjacent = data[i * cols + j];
+        $('<p>' + numAdjacent + '</p>').appendTo($col)
+        $col.css("background-color", "white");
+      }
+      $row.append($col);
+    }
+    $board.append($row);
+  }
+}
 
 })
