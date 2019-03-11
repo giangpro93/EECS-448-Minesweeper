@@ -51,10 +51,3 @@ def showSpace(space):
     else:
         return space.numMines
 
-
-def getRawSpace(space):
-    if space.isMine:
-        return "b"
-    else:
-        return space.numMines
-

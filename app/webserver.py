@@ -108,6 +108,18 @@ def api_selectSpace():
 
 @app.route('/api/cheatMode', methods=['POST'])
 def api_cheatmode():
+    """
+    Displays whole board if cheatMode is True, else shows board as normal
+    Pre: 
+        Game with userID exists in games list
+    Post: 
+        Game displays either full board or non-hidden board
+    Args: 
+        int userID, bool cheatMode
+    Returns: 
+        Full board if cheatMode is True or board in json if cheatMode is False
+    """
+    
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string)
@@ -121,8 +133,7 @@ def api_cheatmode():
                 return str(i.getJson(True))
             else:
                 return str(i.getJson(False))
-    return str(True)
-
+    
 
 def handle_request(request_data):
     # body = request_data['Body'].strip()

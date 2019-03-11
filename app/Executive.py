@@ -111,7 +111,7 @@ class Executive:
         Args: 
             none
         Returns: 
-            returns json file from board
+            returns json string of board depending on if cheatMode
         """
         if not isCheatMode:
             return self.m_board.boardToJson()

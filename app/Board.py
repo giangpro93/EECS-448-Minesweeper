@@ -316,11 +316,23 @@ class Board:
 
 
     def cheatModeBoardToJson(self):
+        """
+        Generates full json to pass to front-end
+        Pre: 
+            none
+        Post: 
+            json string generated
+        Args: 
+            none
+        Returns: 
+            json string with all board information
+        """
+
         myBoard = {}
         space = 0
         for x in range(0, self.m_rows):
             for y in range(0, self.m_cols):
-                myBoard.update({space: getRawSpace(self.m_board[x][y])})
+                myBoard.update({space: showSpace(self.m_board[x][y])})
                 space += 1
         return myBoard
 
