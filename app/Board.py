@@ -1,4 +1,4 @@
-from BoardSpace import BoardSpace, getSpace, showSpace
+from BoardSpace import BoardSpace, getSpace, showSpace, getRawSpace
 import random
 import json
 
@@ -313,6 +313,17 @@ class Board:
                 myBoard.update({space: getSpace(self.m_board[x][y])})
                 space += 1
         return myBoard
+
+
+    def cheatModeBoardToJson(self):
+        myBoard = {}
+        space = 0
+        for x in range(0, self.m_rows):
+            for y in range(0, self.m_cols):
+                myBoard.update({space: getRawSpace(self.m_board[x][y])})
+                space += 1
+        return myBoard
+
 
     # end of Executive call function
     # ------------------------------

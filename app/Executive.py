@@ -101,7 +101,7 @@ class Executive:
 
         return self.m_userID
 
-    def getJson(self):
+    def getJson(self, isCheatMode):
         """
         Pass through json
         Pre: 
@@ -113,5 +113,7 @@ class Executive:
         Returns: 
             returns json file from board
         """
-
-        return self.m_board.boardToJson()
+        if not isCheatMode:
+            return self.m_board.boardToJson()
+        else:
+            return self.m_board.cheatModeBoardToJson()

@@ -92,10 +92,10 @@ def api_selectSpace():
                 # handle different cases on right click
                 if result == -1:
                     # user out of flags
-                    return str(i.getJson())
+                    return str(i.getJson(False))
                 elif result == 0:
                     # Flag successfully planted
-                    return str(i.getJson())
+                    return str(i.getJson(False))
                 elif result == 1:
                     return "WINNER"
             else:
@@ -103,7 +103,25 @@ def api_selectSpace():
                 if result is False:
                     return "LOSER"
                 else:
-                    return str(i.getJson())
+                    return str(i.getJson(False))
+
+
+@app.route('/api/cheatMode', methods=['POST'])
+def api_cheatmode():
+    s = request.form.to_dict()['json_string']
+    json_acceptable_string = s.replace("'", "\"")
+    d = json.loads(json_acceptable_string)
+    userID = (int)(d['userID'])
+    cheatMode = (d['cheatMode'])
+    
+    for i in games:
+        if (i.getUserID() == userID):
+            # Reveal board cheat mode
+            if cheatMode is True:
+                return str(i.getJson(True))
+            else:
+                return str(i.getJson(False))
+    return str(True)
 
 
 def handle_request(request_data):
