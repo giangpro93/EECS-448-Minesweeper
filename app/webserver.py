@@ -69,6 +69,7 @@ def api_newboard():
     return str(True)
 
 
+# *** refined by Giang ***
 @app.route('/api/selectSpace', methods=['POST'])
 def api_selectSpace():
     """
@@ -95,23 +96,11 @@ def api_selectSpace():
         if i.getUserID() == userID:
             # call either right or left click method
             if rightClick is True:
-                result = i.rightClick(rows, cols)
-
-                # handle different cases on right click
-                if result == -1:
-                    # user out of flags
-                    return str(i.getJson(False))
-                elif result == 0:
-                    # Flag successfully planted
-                    return str(i.getJson(False))
-                elif result == 1:
-                    return "WINNER"
+                i.rightClick(rows, cols)
+                return str(i.getJson(False))
             else:
-                result = i.leftClick(rows, cols)
-                if result is False:
-                    return "LOSER"
-                else:
-                    return str(i.getJson(False))
+                i.leftClick(rows, cols)
+                return str(i.getJson(False))
 
 
 @app.route('/api/cheatMode', methods=['POST'])

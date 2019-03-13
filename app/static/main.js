@@ -63,6 +63,7 @@ function createBoard(rows, cols){
   }
 }
 
+// *** refined by Giang ***
 function updateBoard(data) {
     for(let i =0; i < rows; i++){
       for(let j = 0; j < cols; j++){
@@ -76,9 +77,15 @@ function updateBoard(data) {
             $_id(id).innerHTML = '&#9873';
             $_id(id).style.color = '#ff0000';
         }
-        else{
+        else if(data[i*cols+j] == 'b'){
+            $_id(id).innerHTML = '&#9728';
+            $_id(id).style.color = 'red';
+        }
+        else {
             var numAdjacent = data[i*cols+j];
             switch (numAdjacent) {
+                case 0:
+                    $_id(id).style.color = 'white'; break;
                 case 1:
                     $_id(id).style.color = 'blue'; break;
                 case 2:
@@ -87,7 +94,13 @@ function updateBoard(data) {
                     $_id(id).style.color = 'red'; break;
                 case 4:
                     $_id(id).style.color = 'purple'; break;
-                default:
+                case 5:
+                    $_id(id).style.color = 'maroon'; break;
+                case 6:
+                    $_id(id).style.color = 'turquoise'; break;
+                case 7:
+                    $_id(id).style.color = 'black'; break;
+                case 8:
                     $_id(id).style.color = 'black'; break;
             }
             $_id(id).style.background = '#EEE';
@@ -98,6 +111,7 @@ function updateBoard(data) {
     }
 }
 
+// *** refined by Giang ***
 function leftClick(row,col) {
     const url = 'api/selectSpace'
     if (ended) {
@@ -119,19 +133,19 @@ function leftClick(row,col) {
       },
       dataType: 'text'
     }).done(function() {
-      if (data == "WINNER"){
-        gameOver(true);
-      }
-      else if (data == "LOSER") {
-        gameOver(false);
-      }
-      else{
-        data = eval("data = " + data);
-        updateBoard(data);
-      }
+        data = data.replace(/'/g, "\"");
+        data = JSON.parse(data);
+        if (data["status"] != "None") updateBoard(data);
+        if (data["status"] == "Win") {
+            gameOver(true);
+        }
+        if (data["status"] == "Lose") {
+            gameOver(false);
+        }
     });
 }
 
+// *** refined by Giang ***
 function rightClick(row,col) {
     const url = 'api/selectSpace';
     if (ended) {
@@ -152,28 +166,56 @@ function rightClick(row,col) {
       },
       dataType: 'text'
     }).done(function() {
-      if (data == "WINNER"){
-        gameOver(true);
-      }
-      else if (data == "LOSER") {
-        gameOver(false);
-      }
-      else{
-        data = eval("data = " + data);
-        updateBoard(data);
+      data = data.replace(/'/g, "\"");
+      data = JSON.parse(data);
+      if (data["status"] == "DoneF"){
+        var id = 'cell-' + row + '-' + col;
+        if ($_id(id).innerHTML == '&nbsp;') {
+            $_id(id).innerHTML = '&#9873';
+            $_id(id).style.color = '#ff0000';
+        }
+        else {
+            $_id(id).innerHTML = '&nbsp;';
+            $_id(id).style.color = '#000000';
+        }
       }
     });
 }
 
+// *** refined by Giang ***
 function gameOver(isWon){
   ended=1;
   message = $_id("message");
   if(isWon){
     message.innerHTML="You've won $1B prize!!";
     message.style.color="green";
+    for (let row=0;row<rows;row++)
+    for (let col=0;col<cols;col++) {
+        var id = 'cell-' + row + '-' + col;
+        if ($_id(id).innerHTML == '&nbsp;') {
+            if ($_id(id).style.color == 'white')
+                $_id(id).innerHTML = '&#x2b50';
+            else {
+                $_id(id).innerHTML = '&#9728';
+                $_id(id).style.color = 'black';
+                $_id(id).style.backgroundColor = 'green';
+            }
+        }
+    }
   }
   else{
     message.innerHTML="You've lost :(";
     message.style.color="red";
+    for (let row=0;row<rows;row++)
+    for (let col=0;col<cols;col++) {
+        var id = 'cell-' + row + '-' + col;
+        if ($_id(id).innerHTML == '&nbsp;')
+        if ($_id(id).style.color != 'white') {
+            $_id(id).innerHTML = '&#9760';
+            $_id(id).style.color = 'black';
+            $_id(id).style.backgroundColor = 'red';
+        }
+
+    }
   }
 }

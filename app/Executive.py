@@ -9,7 +9,6 @@ class Executive:
 
     # Define member variables
     m_board = Board(1, 1, 1)
-    firstMove = True
     m_userID = 0
 
     def __init__(self, rows, cols, numMines, userID):
@@ -33,11 +32,10 @@ class Executive:
             raise RuntimeError('Invalid number of mines')
 
         self.m_board = Board(rows, cols, numMines)
-        self.firstMove = True
         self.m_userID = userID
         return
 
-    # included by Giang
+    # *** included by Giang ***
     def reset(self, rows, cols, numMines, userID):
 
         if rows < 2 or cols < 2:
@@ -46,11 +44,11 @@ class Executive:
             raise RuntimeError('Invalid number of mines')
 
         self.m_board = Board(rows, cols, numMines)
-        self.firstMove = True
         self.m_userID = userID
 
         return
 
+    # *** refined by Giang ***
     def leftClick(self, row, col):
         """
         Handles left click event - clicking on a new space
@@ -64,16 +62,9 @@ class Executive:
             returns false is user loses game
         """
 
-        # if this is user's first move, still need to set mines
-        if self.firstMove is True:
-            self.m_board.firstStep(row, col)
-            self.firstMove = False
-        else:
-            if self.m_board.selectSpace(row, col) is True:
-                return (False)
+        self.m_board.selectSpace(row, col)
 
-        return
-
+    # *** refined by Giang
     def rightClick(self, row, col):
         """
         Handles right click event - toggling flag
@@ -89,16 +80,8 @@ class Executive:
             returns 1 if user wins (all mines flagged)
         """
 
-        try:
-            self.m_board.toggleFlagSpace(row, col)
-        except:
-            return (-1)
+        self.m_board.toggleFlagSpace(row, col)
 
-        # check if user has won the game (flagged all mines)
-        if self.m_board.userWin() is True:
-            return 1
-        else:
-            return 0
 
     def getUserID(self):
         """

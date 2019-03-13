@@ -9,6 +9,7 @@ class Board:
     Handles all things related to the game and is called by executive
     """
 
+    # *** refined by Giang ***
     # initializes the board
     def __init__(self, rows, cols, mines):
         """
@@ -26,95 +27,21 @@ class Board:
         self.m_rows = rows
         self.m_cols = cols
         self.m_mines = mines
-        self.m_numFlags = mines
-        self.m_minesFlagged = 0
+        self.m_revealed = 0
         self.m_board = []
+        self.status = ""
         for r in range(0, rows):
             self.m_board.append([])
             for c in range(0, cols):
                 self.m_board[r].append(BoardSpace())
 
-    # prints board to terminal(currently)
-
-    def printBoard(self):
-        """
-        prints board to console
-        Pre: 
-            valid board instantiated
-        Post: 
-            board written to console
-        Args: 
-            No Arguments
-        Returns: 
-            No return
-        """
-
-        for x in range(0, self.m_rows):
-            for y in range(0, self.m_cols):
-                print(getSpace(self.m_board[x][y]), end=' ')
-            print()
-
-    # shows either bomb or number of spaces around bomb
-    def showBoard(self):
-        """
-        prints board to console, showing space detail
-        Pre: 
-            valid board instantiated
-        Post: 
-            board written to console
-        Args: 
-            No Arguments
-        Returns: 
-            No return
-        """
-
-        for x in range(0, self.m_rows):
-            for y in range(0, self.m_cols):
-                print(showSpace(self.m_board[x][y]), end='')
-            print()
-
-    # shows flags on the board
-    def showFlags(self):
-        """
-        prints board to console, showing flags
-        Pre: 
-            valid board instantiated
-        Post: 
-            board written to console
-        Args: 
-            No Arguments
-        Returns: 
-            No return
-        """
-
-        for x in (self.m_rows-1):
-            for y in (self.m_cols-1):
-                if self.m_board[x][y].isFlagged():
-                    print("f")
-                else:
-                    print("0")
-            print('\0')
-
-    # takes first step, then places all bombs
-    def firstStep(self, xpos, ypos):
-        """
-        Handles user's first move, setting mines and calculating nearby spaces
-        Pre: 
-            valid x and y coordinates
-        Post: 
-            mines set and nearby spaces calculated
-        Args: 
-            int xpos (row), int ypos (column)
-        Returns: 
-            No return
-        """
-
-        self.placeBombs(xpos, ypos)
+        # init
+        self.placeBombs()
         self.calculateNearby()
-        self.selectSpace(xpos, ypos)
 
+    # *** refined by Giang ***
     # places all mines around the first space stepped on
-    def placeBombs(self, xpos, ypos):
+    def placeBombs(self):
         """
         Places mines randomly around map
         Pre: 
@@ -127,25 +54,14 @@ class Board:
             none
         """
 
-        # initializes a 1D array to randomly place bombs in indicies
-        maxIndex = self.m_cols * self.m_rows
-        mineIndex = [False] * (maxIndex-1)
-
         # initializes a certian number of mines
         for x in range(0, self.m_mines):
-            mineIndex[x] = True
-
-        # shuffle the array to achieve randomness
-        random.shuffle(mineIndex)
-
-        # copy 1D array into 2D array, adjusting for xpos,ypos
-        collision = 0
-        for i in range(0, self.m_rows):
-            for j in range(0, self.m_cols):
-                if i == xpos and j == ypos:
-                    collision = 1
-                elif (mineIndex[j+(i*self.m_cols)-collision]):
-                    self.m_board[i][j].isMine = True
+            while True:
+                row = random.randint(0,self.m_rows-1)
+                col = random.randint(0,self.m_cols-1)
+                if not self.m_board[row][col].isMine:
+                    break
+            self.m_board[row][col].isMine = True
 
     def calculateNearby(self):
         """
@@ -181,11 +97,12 @@ class Board:
         count = 0
         for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_rows)):
             for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_cols)):
-                if ((x != xpos or y != ypos) and self.m_board[x][y].isMine):
+                if (x != xpos or y != ypos) and self.m_board[x][y].isMine:
                     count += 1
 
         return count
 
+    # *** refined by Giang ***
     def recUnhide(self, xpos, ypos):
         """
         Recursively unhide spaces until there are mines surrounding it
@@ -198,18 +115,22 @@ class Board:
         Returns: 
             No return
         """
+        if self.m_board[xpos][ypos].isFlagged or self.m_board[xpos][ypos].isMine or not self.m_board[xpos][ypos].isHidden:
+            return
 
-        if self.m_board[xpos][ypos].numMines == 0 and self.m_board[xpos][ypos].isHidden:
-            self.m_board[xpos][ypos].isHidden = False
+        self.m_board[xpos][ypos].isHidden = False
+        self.m_revealed += 1
+
+        if self.m_board[xpos][ypos].numMines == 0:
             for x in range(max(xpos - 1, 0), min(xpos + 2, self.m_rows)):
                 for y in range(max(ypos - 1, 0), min(ypos + 2, self.m_cols)):
                     if x != xpos or y != ypos:
                         self.recUnhide(x, y)
-        self.m_board[xpos][ypos].isHidden = False
 
     # -------------------------
     # methods for Executive to call (excluding initialize)
 
+    # *** refined by Giang ***
     # toggleFlag Space if valid
     def toggleFlagSpace(self, row, col):
         """
@@ -225,26 +146,13 @@ class Board:
         Raise: 
             RuntimeError if no flags remain
         """
-
-        # check if we can flag the space
-        if not self.m_board[row][col].isFlagged and self.m_numFlags > 0:
-            self.m_board[row][col].isFlagged = True
-            self.m_numFlags -= 1
-            # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isMine:
-                self.m_minesFlagged += 1
-        # check if space is already flagged, then remove
-        elif self.m_board[row][col].isFlagged:
-            self.m_board[row][col].isFlagged = False
-            self.m_numFlags += 1
-            # if the space is a mine, update correctedly flagged count
-            if self.m_board[row][col].isMine:
-                self.m_minesFlagged -= 1
-
-        # throw an exception if you're out of flags
+        if not self.m_board[row][col].isHidden:
+            self.status = "None"
         else:
-            raise RuntimeError("Out of flags")
+            self.m_board[row][col].isFlagged = not self.m_board[row][col].isFlagged
+            self.status = "DoneF"
 
+    # *** refined by Giang ***
     # user clicks a spot
     # returns true if a mine is hit, else false
     def selectSpace(self, row, col):
@@ -260,19 +168,24 @@ class Board:
             True if mine is hit, else False
         """
 
+        if self.m_board[row][col].isFlagged or not self.m_board[row][col].isHidden:
+            self.status = "None"
+            return
+
         # if the selected space is a mine
-        if self.m_board[row][col].isFlagged:
-            return False
         if self.m_board[row][col].isMine:
-            return True
+            self.status = "Lose"
         else:
             # check if this spot is adjacent to other mines
             # if not, reveal 8 surrounding spaces in recursive function
             self.recUnhide(row, col)
 
-            # return false
-            return False
+            if self.userWin():
+                self.status = "Win"
+            else:
+                self.status = "Done"
 
+    # *** refined by Giang ***
     # check if the user has flagged all mines - true if user has won, else false
     def userWin(self):
         """
@@ -287,11 +200,12 @@ class Board:
             True if user has won, else False
         """
 
-        if self.m_mines == self.m_minesFlagged:
+        if self.m_mines == (self.m_rows*self.m_cols-self.m_revealed):
             return True
         else:
             return False
 
+    # *** refined by Giang ***
     def boardToJson(self):
         """
         Generates json to pass to front-end
@@ -307,13 +221,18 @@ class Board:
         """
 
         myBoard = {}
-        space = 0
-        for x in range(0, self.m_rows):
-            for y in range(0, self.m_cols):
-                myBoard.update({space: getSpace(self.m_board[x][y])})
-                space += 1
-        return myBoard
+        myBoard.update({'status': self.status})
+        if self.status != "None" and self.status != "DoneF":
+            space = 0
+            for x in range(0, self.m_rows):
+                for y in range(0, self.m_cols):
+                    if self.status != "Lose" or (not self.m_board[x][y].isMine or self.m_board[x][y].isFlagged):
+                        myBoard.update({str(space): getSpace(self.m_board[x][y])})
+                    else:
+                        myBoard.update({str(space): "b"})
+                    space += 1
 
+        return myBoard
 
     def cheatModeBoardToJson(self):
         """
