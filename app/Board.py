@@ -1,4 +1,4 @@
-from BoardSpace import BoardSpace, getSpace, showSpace, getRawSpace
+from BoardSpace import BoardSpace, getSpace, showSpace
 import random
 import json
 

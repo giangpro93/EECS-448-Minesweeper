@@ -2,22 +2,53 @@
 <html>
 <head>
   <title>Minesweeper</title>
-  <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
+  <link rel="stylesheet" type="text/css" href="../static/style.css"/>
   <!-- include jquery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  <h1>Minesweeper</h1>
-  <h3>*Left click to dig<br>
-      *Right click to flag
-  </h3>
-  <form id = "board-def" style = "display: block" onsubmit="return onSubmit();">
-    <p>Board Size: <input type = "number" id = "num_rows"/>  x <input type = "number" id = "num_cols"/></p>
-    <p><br>Number of mines: <input type = "number" id = "num_mines"/></p><br>
-    <input type = "submit" value = "Submit">
-  </form>
+  <div class="topBar">
+    <div class="header">
+      <h1 id="title">Minesweeper</h1>
+    </div>
+    <form id = "board-def" onsubmit="return resetBoard();">
+      <ul class="nav-list">
+        <li class="nav-text">
+          <label for="userIdlabel">UserID: </label>
+          <input type="text" id="userID" placeholder="Input your user ID" required>
+        </li>
+        <li class="nav-item">
+          <label for="rowslabel">Rows: </label>
+          <input type="number" id="rows" min="2" max="30" value="10">
+        </li>
+        <li class="nav-item">
+          <label for="colslabel">Cols: </label>
+          <input type="number" id="cols" min="2" max="30" value="10">
+        </li>
+        <li class="nav-item">
+          <label for="mineslabel">Mines: </label>
+          <input type="number" id="mines" min="1" value="10">
+        </li>
+        <li class="nav-item">
+          <input id="reset" type="submit" value="Reset">
+        </li>
+      </ul>
+    </form>
+    <pre id="message"></pre>
+  </div>
   <br>
-  <div id = "board" ></div>
+  <div id="board" ></div>
+  <div id="instructions">
+      <h2>Instructions:</h2>
+      <ul>
+          <li>Left-Click a cell to reveal it.</li>
+          <li>If the clicked cell contains a mine, you lose </li>
+          <li>If the clicked cell does not contain a mine, it will reveal the number of mines adjadent to it</li>
+          <li>Right-Click a cell to flag a cell as a mine</li>
+          <li>If all non-mines are clicked, you win!</li>
+      </ul>
+  </div>
   <script src = "../static/main.js"></script>
 </body>
 </html>

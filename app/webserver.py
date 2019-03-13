@@ -49,7 +49,7 @@ def api_newboard():
     rows = (int)(d['rows'])
     cols = (int)(d['cols'])
     mines = (int)(d['mines'])
-    userID = (int)(d['userID'])
+    userID = (d['userID'])
     # add new game to list of games
     try:
         newGame = Executive(rows, cols, mines, userID)
@@ -81,7 +81,7 @@ def api_selectSpace():
     d = json.loads(json_acceptable_string)
     rows = (int)(d['rows'])
     cols = (int)(d['cols'])
-    userID = (int)(d['userID'])
+    userID = (d['userID'])
     rightClick = (d['rightClick'] == "true")
     for i in games:
         if (i.getUserID() == userID):
@@ -123,7 +123,7 @@ def api_cheatmode():
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string)
-    userID = (int)(d['userID'])
+    userID = (d['userID'])
     cheatMode = (d['cheatMode'])
     
     for i in games:

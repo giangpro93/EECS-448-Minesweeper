@@ -1,123 +1,120 @@
+var $_id = id => document.getElementById(id);
 $board = $('#board');
 
-var cols = null;
-var rows = null;
-let userID = null;
+var cols = 0;
+var rows = 0;
+var mines= 0;
+var userID = "";
+var ended = 0;
 
-function onSubmit(){
+// *** Refined by Giang ***
+function resetBoard(){
   const url='api/createBoard';
-  //get user input
-  rows = document.getElementById("num_rows").value;
-  cols = document.getElementById("num_cols").value;
-  const mines = document.getElementById('num_mines').value;
-
+  userID = $_id("userID").value;
+  rows = $_id("rows").value;
+  cols = $_id("cols").value;
+  mines = $_id('mines').value;
+  message = $_id("message");
+  message.innerHTML="";
   if(rows < 2 || cols < 2){
-    if(!alert('Poor size values!')){window.location.reload();}
-  }
-  if(mines >= (rows*cols) || mines == 0){
-    if(!alert('Poor mine number value!')){window.location.reload();}
+    message.innerHTML='The board must have at least 2 rows and 2 columns.';
+    message.style.color="red";
+    return false;
   }
 
-  userID = createUniqueID();
+  if (mines < 1) {
+    message.innerHTML='The board must have at least one mine!';
+    message.style.color="red";
+    return false;
+  }
+
+  if(mines >= (rows*cols)){
+    message.innerHTML="Too many mines!!! The maximum number of mines for this board is "+(rows*cols-1);
+    message.style.color="red";
+    return false;
+  }
 
   $.post(url, {
     json_string: JSON.stringify({rows: rows, cols: cols, mines: mines, userID: userID})
   });
   createBoard(rows, cols);
-  let form = document.getElementById('board-def');
-  form.style.display = 'none';
   return false;
 }
 
-function createUniqueID(){
-  //create random number for userID
-  let userID = Math.floor((Math.random() * 1000000) + 1);
-  return(userID);
-}
-
-function createBoard(r, c){
-
+function createBoard(rows, cols){
   //board generation through div
-  for(let i =0; i < r; i++){
+  /*for(let i =0; i < r; i++){
     const $row = $('<div>').addClass('row');
     for(let j = 0; j < c; j++){
       const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
       $row.append($col);
     }
     $board.append($row);
+  }*/
+  board.innerHTML="";
+  for (let row=0;row<rows;row++) {
+    $_id('board').innerHTML+='<br>';
+    for (let col=0;col<cols;col++) {
+        var id = 'id="cell-'+ row +'-'+ col +'"';
+        var classname = 'class="cell" ';
+        var onclick = 'onclick="leftClick('+ row +','+ col +')" ';
+        var oncontext = 'oncontextmenu="rightClick('+ row +','+ col +'); return false"';
+        var button = '<button '+ id + classname + onclick + oncontext + '>&nbsp;</button>';
+        $_id('board').innerHTML += button;
+    }
   }
 }
 
-function gameOver(isWon){
-  if(isWon){
-        var win = window.open('https://winner.info/');
-        if (win) {
-          win.focus();
+function updateBoard(data) {
+    for(let i =0; i < rows; i++){
+      for(let j = 0; j < cols; j++){
+        var id = 'cell-' + i + '-' + j;
+        if(data[i*cols+j] == '_'){
+            //do nothing
+            $_id(id).innerHTML = '&nbsp;';
+            $_id(id).style.color = '#000000';
         }
-        else {
-          alert('Allow popups for Minesweeper');
+        else if(data[i*cols+j] == 'f'){
+            $_id(id).innerHTML = '&#9873';
+            $_id(id).style.color = '#ff0000';
         }
-  }
-  else{
-      var win = window.open('http://www.losers.org/');
-      if (win) {
-        win.focus();
+        else{
+            var numAdjacent = data[i*cols+j];
+            switch (numAdjacent) {
+                case 1:
+                    $_id(id).style.color = 'blue'; break;
+                case 2:
+                    $_id(id).style.color = 'green'; break;
+                case 3:
+                    $_id(id).style.color = 'red'; break;
+                case 4:
+                    $_id(id).style.color = 'purple'; break;
+                default:
+                    $_id(id).style.color = 'black'; break;
+            }
+            $_id(id).style.background = '#EEE';
+            if (numAdjacent!=0)
+                $_id(id).innerHTML=numAdjacent;
+        }
       }
-      else {
-        alert('Allow popups for Minesweeper');
-      }
-  }
-  window.location.reload();
+    }
 }
 
-$board.on('contextmenu', '.col.hidden',function(e){
-      const url = 'api/selectSpace';
-      //disable context menu if right-click on board and post data
-      const $block = $(this);
-      const rowVal = $block.data('row');
-      const colVal = $block.data('col');
-
-      if(e.which == 3){
-        e.preventDefault();
-        const $thisSpace = $(`.col.hidden[data-row=${rowVal}][data-col=${colVal}]`);
-        //$('<p><|</p>').appendTo($thisSpace);
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: {
-            json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "true", userID: userID})
-          },
-          success: function(response){
-            data = response;
-          },
-          dataType: 'text'
-        }).done(function() {
-          if (data == "WINNER"){
-            gameOver(true);
-          }
-          else if (data == "LOSER") {
-            gameOver(false);
-          }
-          else {
-            renderBoard(data);
-          }
-        });
-      }
-});
-
-$board.on('click', '.col.hidden', function(e){
+function leftClick(row,col) {
     const url = 'api/selectSpace'
-    //get index on grid of click location
-    const $block = $(this);
-    const rowVal = $block.data('row');
-    const colVal = $block.data('col');
+    if (ended) {
+        ended++;
+        if (ended>3) alert("C'mon, the game ended. There's nothing you can do.");
+        return;
+    }
+
     let data;
     //send row and col value in a string with JSON to url
     $.ajax({
       type: "POST",
       url: url,
       data: {
-        json_string: JSON.stringify({rows: rowVal, cols: colVal, rightClick: "false", userID: userID})
+        json_string: JSON.stringify({rows: row, cols: col, rightClick: "false", userID: userID})
       },
       success: function(response){
         data = response;
@@ -131,34 +128,53 @@ $board.on('click', '.col.hidden', function(e){
         gameOver(false);
       }
       else{
-        renderBoard(data);
+        data = eval("data = " + data);
+        updateBoard(data);
       }
     });
-
-function renderBoard(data) {
-  $board.empty();
-  data = eval("data = " + data);
-  var countRow = 0;
-  var countCol = 0;
-  for (let i = 0; i < rows; i++) {
-    const $row = $('<div>').addClass('row');
-    for (let j = 0; j < cols; j++) {
-      const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
-      if (data[i * cols + j] == '_') {
-        $col.css("background-color", "grey");
-      }
-      else if (data[i * cols + j] == 'f') {
-        $('<p><|</p>').appendTo($col);
-      }
-      else {
-        var numAdjacent = data[i * cols + j];
-        $('<p>' + numAdjacent + '</p>').appendTo($col)
-        $col.css("background-color", "white");
-      }
-      $row.append($col);
-    }
-    $board.append($row);
-  }
 }
 
-})
+function rightClick(row,col) {
+    const url = 'api/selectSpace';
+    if (ended) {
+        ended++;
+        if (ended>3) alert("C'mon, the game ended. There's nothing you can do.");
+        return;
+    }
+
+    let data;
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: {
+        json_string: JSON.stringify({rows: row, cols: col, rightClick: "true", userID: userID})
+      },
+      success: function(response){
+        data = response;
+      },
+      dataType: 'text'
+    }).done(function() {
+      if (data == "WINNER"){
+        gameOver(true);
+      }
+      else if (data == "LOSER") {
+        gameOver(false);
+      }
+      else{
+        data = eval("data = " + data);
+        updateBoard(data);
+      }
+    });
+}
+
+function gameOver(isWon){
+  message = $_id("message");
+  if(isWon){
+    message.innerHTML="You've won $1B prize!!";
+    message.style.color="green";
+  }
+  else{
+    message.innerHTML="You've lost :(";
+    message.style.color="red";
+  }
+}
