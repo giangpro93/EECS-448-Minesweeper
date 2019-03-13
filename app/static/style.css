@@ -2,34 +2,6 @@ body {
   font-family: helvetica;
 }
 
-.col{
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  vertical-align: top;
-  font-size: 20px;
-  line-height: 50px;
-  color: black;
-}
-
-.col.hidden{
-  background-color: grey;
-  cursor: pointer;
-}
-
-.col.hidden:hover {
-  background-color: red;
-}
-
-.row{
-  font-size: 0px;
-}
-
-//
-
 .topBar {
     background: #c3c3c3;
     padding: 10px;
@@ -44,8 +16,10 @@ body {
 }
 
 #message {
-    text-align: center;
+    font-family: monospace;
     font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
 }
 
 .nav-list {

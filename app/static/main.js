@@ -1,56 +1,49 @@
 var $_id = id => document.getElementById(id);
-$board = $('#board');
 
-var cols = 0;
 var rows = 0;
-var mines= 0;
+var cols = 0;
+var mines = 0;
 var userID = "";
 var ended = 0;
 
 // *** Refined by Giang ***
 function resetBoard(){
   const url='api/createBoard';
-  userID = $_id("userID").value;
+
   rows = $_id("rows").value;
   cols = $_id("cols").value;
   mines = $_id('mines').value;
+  userID = $_id("userID").value;
+  ended = 0;
+
   message = $_id("message");
-  message.innerHTML="";
+  message.innerHTML="&nbsp";
   if(rows < 2 || cols < 2){
     message.innerHTML='The board must have at least 2 rows and 2 columns.';
     message.style.color="red";
-    return false;
+    return;
   }
 
   if (mines < 1) {
     message.innerHTML='The board must have at least one mine!';
     message.style.color="red";
-    return false;
+    return;
   }
 
   if(mines >= (rows*cols)){
     message.innerHTML="Too many mines!!! The maximum number of mines for this board is "+(rows*cols-1);
     message.style.color="red";
-    return false;
+    return;
   }
 
   $.post(url, {
     json_string: JSON.stringify({rows: rows, cols: cols, mines: mines, userID: userID})
   });
   createBoard(rows, cols);
-  return false;
 }
 
+// *** Refined by Giang ***
 function createBoard(rows, cols){
-  //board generation through div
-  /*for(let i =0; i < r; i++){
-    const $row = $('<div>').addClass('row');
-    for(let j = 0; j < c; j++){
-      const $col = $('<div>').addClass('col hidden').attr('data-row', i).attr('data-col', j);
-      $row.append($col);
-    }
-    $board.append($row);
-  }*/
   board.innerHTML="";
   for (let row=0;row<rows;row++) {
     $_id('board').innerHTML+='<br>';
@@ -168,6 +161,7 @@ function rightClick(row,col) {
 }
 
 function gameOver(isWon){
+  ended=1;
   message = $_id("message");
   if(isWon){
     message.innerHTML="You've won $1B prize!!";

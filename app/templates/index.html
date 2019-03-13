@@ -12,7 +12,7 @@
     <div class="header">
       <h1 id="title">Minesweeper</h1>
     </div>
-    <form id = "board-def" onsubmit="return resetBoard();">
+    <form id = "board-def">
       <ul class="nav-list">
         <li class="nav-text">
           <label for="userIdlabel">UserID: </label>
@@ -31,12 +31,13 @@
           <input type="number" id="mines" min="1" value="10">
         </li>
         <li class="nav-item">
-          <input id="reset" type="submit" value="Reset">
+          <button type="button" id="reset" onclick="resetBoard()">Reset</button>
         </li>
       </ul>
     </form>
-    <pre id="message"></pre>
   </div>
+  <br>
+  <div id="message">&nbsp</div>
   <br>
   <div id="board" ></div>
   <div id="instructions">

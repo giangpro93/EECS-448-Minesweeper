@@ -25,9 +25,9 @@ class Board:
 
         self.m_rows = rows
         self.m_cols = cols
-        self.m_numMines = mines
+        self.m_mines = mines
         self.m_numFlags = mines
-        self.m_numMinesFlagged = 0
+        self.m_minesFlagged = 0
         self.m_board = []
         for r in range(0, rows):
             self.m_board.append([])
@@ -132,7 +132,7 @@ class Board:
         mineIndex = [False] * (maxIndex-1)
 
         # initializes a certian number of mines
-        for x in range(0, self.m_numMines):
+        for x in range(0, self.m_mines):
             mineIndex[x] = True
 
         # shuffle the array to achieve randomness
@@ -232,14 +232,14 @@ class Board:
             self.m_numFlags -= 1
             # if the space is a mine, update correctedly flagged count
             if self.m_board[row][col].isMine:
-                self.m_numMinesFlagged += 1
+                self.m_minesFlagged += 1
         # check if space is already flagged, then remove
         elif self.m_board[row][col].isFlagged:
             self.m_board[row][col].isFlagged = False
             self.m_numFlags += 1
             # if the space is a mine, update correctedly flagged count
             if self.m_board[row][col].isMine:
-                self.m_numMinesFlagged -= 1
+                self.m_minesFlagged -= 1
 
         # throw an exception if you're out of flags
         else:
@@ -287,7 +287,7 @@ class Board:
             True if user has won, else False
         """
 
-        if self.m_numMines == self.m_numMinesFlagged:
+        if self.m_mines == self.m_minesFlagged:
             return True
         else:
             return False

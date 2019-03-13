@@ -8,7 +8,7 @@ class Executive:
     """
 
     # Define member variables
-    m_board = Board(5, 5, 2)
+    m_board = Board(1, 1, 1)
     firstMove = True
     m_userID = 0
 
@@ -35,6 +35,20 @@ class Executive:
         self.m_board = Board(rows, cols, numMines)
         self.firstMove = True
         self.m_userID = userID
+        return
+
+    # included by Giang
+    def reset(self, rows, cols, numMines, userID):
+
+        if rows < 2 or cols < 2 or rows > 30 or cols > 30:
+            raise RuntimeError('Invalid board size')
+        if numMines < 1 or numMines > rows * cols - 1:
+            raise RuntimeError('Invalid number of mines')
+
+        self.m_board = Board(rows, cols, numMines)
+        self.firstMove = True
+        self.m_userID = userID
+
         return
 
     def leftClick(self, row, col):

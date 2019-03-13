@@ -28,7 +28,6 @@ def main():
         return render_template('index.html')
 
 
-
 @app.route('/api/createBoard', methods=['POST'])
 def api_newboard():
     """
@@ -50,13 +49,22 @@ def api_newboard():
     cols = (int)(d['cols'])
     mines = (int)(d['mines'])
     userID = (d['userID'])
-    # add new game to list of games
-    try:
-        newGame = Executive(rows, cols, mines, userID)
-    except:
-        return "INVALID_USER_INPUT"
 
-    games.append(newGame)
+    alreadyExist = False
+    for i in games:
+        if i.getUserID() == userID:
+            alreadyExist = True
+            i.reset(rows, cols, mines, userID)
+            break
+
+    if not alreadyExist:
+        # add new game to list of games
+        try:
+            newGame = Executive(rows, cols, mines, userID)
+        except:
+            return "INVALID_USER_INPUT"
+        games.append(newGame)
+
     # POST with JSON
     return str(True)
 
@@ -84,7 +92,7 @@ def api_selectSpace():
     userID = (d['userID'])
     rightClick = (d['rightClick'] == "true")
     for i in games:
-        if (i.getUserID() == userID):
+        if i.getUserID() == userID:
             # call either right or left click method
             if rightClick is True:
                 result = i.rightClick(rows, cols)
@@ -127,7 +135,7 @@ def api_cheatmode():
     cheatMode = (d['cheatMode'])
     
     for i in games:
-        if (i.getUserID() == userID):
+        if i.getUserID() == userID:
             # Reveal board cheat mode
             if cheatMode is True:
                 return str(i.getJson(True))
