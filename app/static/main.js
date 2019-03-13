@@ -6,6 +6,11 @@ var mines = 0;
 var userID = "";
 var ended = 0;
 
+window.onload=function()
+{
+    resetBoard();
+}
+
 // *** Refined by Giang ***
 function resetBoard(){
   const url='api/createBoard';
