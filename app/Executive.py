@@ -15,19 +15,19 @@ class Executive:
     def __init__(self, rows, cols, numMines, userID):
         """
         Initialize Executive
-        Pre: 
+        Pre:
             none
-        Post: 
+        Post:
             member variables set to user specified values
-        Args: 
+        Args:
             int rows, int cols, int numMines, int userID
-        Returns: 
+        Returns:
             none
         Raise:
             RuntimeError if board size is invalid or if invalid number of mines
         """
 
-        if rows < 2 or cols < 2 or rows > 30 or cols > 30:
+        if rows < 2 or cols < 2:
             raise RuntimeError('Invalid board size')
         if numMines < 1 or numMines > rows * cols - 1:
             raise RuntimeError('Invalid number of mines')
@@ -40,7 +40,7 @@ class Executive:
     # included by Giang
     def reset(self, rows, cols, numMines, userID):
 
-        if rows < 2 or cols < 2 or rows > 30 or cols > 30:
+        if rows < 2 or cols < 2:
             raise RuntimeError('Invalid board size')
         if numMines < 1 or numMines > rows * cols - 1:
             raise RuntimeError('Invalid number of mines')
@@ -54,13 +54,13 @@ class Executive:
     def leftClick(self, row, col):
         """
         Handles left click event - clicking on a new space
-        Pre: 
+        Pre:
             valid input for row and col
-        Post: 
+        Post:
             Modifies board to unhide selected spot (and related)
-        Args: 
+        Args:
             int row, int col
-        Returns: 
+        Returns:
             returns false is user loses game
         """
 
@@ -77,13 +77,13 @@ class Executive:
     def rightClick(self, row, col):
         """
         Handles right click event - toggling flag
-        Pre: 
+        Pre:
             valid row and col input
-        Post: 
+        Post:
             toggles flag and determines if user has won
-        Args: 
+        Args:
             int rows, int cols
-        Returns: 
+        Returns:
             returns -1 if user is out of flags
             returns 0 if flag was successfully planted
             returns 1 if user wins (all mines flagged)
@@ -103,13 +103,13 @@ class Executive:
     def getUserID(self):
         """
         Gets userID for Executive instance
-        Pre: 
+        Pre:
             none
-        Post: 
+        Post:
             none
-        Args: 
+        Args:
             none
-        Returns: 
+        Returns:
             int userID
         """
 
@@ -118,13 +118,13 @@ class Executive:
     def getJson(self, isCheatMode):
         """
         Pass through json
-        Pre: 
+        Pre:
             none
-        Post: 
+        Post:
             none
-        Args: 
+        Args:
             none
-        Returns: 
+        Returns:
             returns json string of board depending on if cheatMode
         """
         if not isCheatMode:
