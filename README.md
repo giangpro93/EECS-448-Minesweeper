@@ -24,8 +24,6 @@ Navigate to site listed on terminal (Ex: localhost:3001)
 
 Play Minesweeper
 
-Alternatively, visit  34.73.44.45 on your web browser
-
 # Documentation
 
 With sphinx installed from the docs directery, run:
